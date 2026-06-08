@@ -13,7 +13,6 @@
     --olive:#CBD77E;--olive-deep:#a8b85e;--olive-light:#edf5d0;
     --hazel:#E6CA9A;--hazel-deep:#c4995a;--hazel-light:#faf3e8;
     --ink:#282828;--muted:#888888;--muted2:#BBBBBB;
-    /* aliases para compatibilidade */
     --lime:var(--olive);--green:var(--olive);--green-deep:var(--olive-deep);
     --coral:var(--hazel-deep);--coral-soft:var(--hazel);
   }
@@ -36,8 +35,12 @@
     background:linear-gradient(120deg,#282828 10%,var(--olive-deep) 60%,#8fa040 100%);-webkit-background-clip:text;background-clip:text;color:transparent;}
   .hero .sub{color:var(--muted);font-weight:600;font-size:15px;margin-top:6px;}
   .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px;}
-  .chip{font-size:13px;font-weight:700;color:var(--ink);background:var(--card);border:1px solid var(--card-edge);padding:8px 12px;border-radius:12px;display:flex;align-items:center;gap:6px;box-shadow:0 1px 4px rgba(0,0,0,.06);}
-  .chip b{color:var(--olive-deep);font-weight:800;}
+  .chip{font-size:13px;font-weight:700;color:var(--ink);background:var(--card);border:1px solid var(--card-edge);padding:8px 12px;border-radius:12px;display:flex;align-items:center;gap:6px;box-shadow:0 1px 4px rgba(0,0,0,.06);cursor:pointer;transition:border-color .2s,box-shadow .2s,transform .15s;}
+  .chip:active{transform:scale(.94);}
+  .chip:hover{border-color:var(--olive);box-shadow:0 2px 10px rgba(168,184,94,.25);}
+  .chip b,.chip .chip-val{color:var(--olive-deep);font-weight:800;}
+  .chip .edit-hint{font-size:10px;color:var(--muted2);margin-left:2px;}
+  .chip-weight{border-color:var(--olive);background:var(--olive-light);}
 
   .sec-h{display:flex;align-items:center;gap:9px;margin:34px 2px 14px;}
   .sec-h .dot{width:9px;height:9px;border-radius:3px;background:var(--olive);box-shadow:none;}
@@ -76,7 +79,6 @@
   .total-row .tv{font-family:'Anton',sans-serif;font-size:30px;color:var(--ink);}
   .total-row .tv .unit{font-size:14px;color:var(--muted);}
 
-  /* live today / agenda */
   .today-head{display:flex;align-items:center;gap:8px;}
   .today-head .tlab{font-size:13px;font-weight:800;color:var(--muted);letter-spacing:.02em;}
   .today-big{font-family:'Anton',sans-serif;font-size:54px;line-height:.9;color:var(--olive-deep);margin-top:4px;}
@@ -160,6 +162,41 @@
   .acc-body.open{grid-template-rows:1fr;}
   .acc-inner{overflow:hidden;}
   .acc-inner > .card{border-radius:0 0 20px 20px;border-top:none;margin-top:0;box-shadow:0 4px 16px rgba(0,0,0,.06);}
+
+  /* ── MODAL ── */
+  .modal-overlay{position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.35);backdrop-filter:blur(4px);display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .25s ease;}
+  .modal-overlay.open{opacity:1;pointer-events:all;}
+  .modal-sheet{background:var(--card);border-radius:28px 28px 0 0;padding:24px 20px 40px;width:100%;max-width:460px;transform:translateY(100%);transition:transform .35s cubic-bezier(.2,.7,.2,1);max-height:90vh;overflow-y:auto;}
+  .modal-overlay.open .modal-sheet{transform:translateY(0);}
+  .modal-handle{width:40px;height:4px;border-radius:2px;background:var(--card-edge);margin:0 auto 20px;}
+  .modal-title{font-size:17px;font-weight:800;color:var(--ink);margin-bottom:16px;}
+  .modal-label{font-size:12px;font-weight:700;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px;}
+  .modal-input{width:100%;font-family:'Manrope';font-size:16px;font-weight:700;color:var(--ink);background:var(--bg);border:1.5px solid var(--card-edge);border-radius:14px;padding:12px 14px;outline:none;transition:border-color .2s;}
+  .modal-input:focus{border-color:var(--olive-deep);}
+  .modal-btn{width:100%;font-family:'Manrope';font-size:14px;font-weight:800;color:#fff;background:var(--olive-deep);border:none;border-radius:14px;padding:14px;cursor:pointer;margin-top:14px;transition:.2s;}
+  .modal-btn:active{opacity:.85;}
+  .modal-btn-sec{background:var(--bg);color:var(--muted);border:1.5px solid var(--card-edge);}
+  .gender-opts{display:flex;gap:10px;margin-bottom:4px;}
+  .gender-opt{flex:1;font-family:'Manrope';font-size:14px;font-weight:700;padding:12px;border-radius:14px;border:1.5px solid var(--card-edge);background:var(--bg);color:var(--muted);cursor:pointer;transition:.2s;text-align:center;}
+  .gender-opt.sel{border-color:var(--olive-deep);background:var(--olive-light);color:var(--olive-deep);}
+
+  /* weight history */
+  .wh-entry-box{background:var(--bg);border:1.5px solid var(--card-edge);border-radius:16px;padding:16px;margin-bottom:20px;}
+  .wh-entry-box .row{display:flex;gap:10px;align-items:flex-end;}
+  .wh-entry-box .col{flex:1;}
+  .wh-chart-wrap{background:var(--bg);border:1px solid var(--card-edge);border-radius:16px;padding:14px;margin-bottom:16px;}
+  .wh-chart-title{font-size:11px;font-weight:800;color:var(--muted2);letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px;}
+  .wh-list{display:flex;flex-direction:column;gap:6px;}
+  .wh-row{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:var(--bg);border:1px solid var(--card-edge);border-radius:12px;}
+  .wh-row .wh-date{font-size:12px;font-weight:600;color:var(--muted);}
+  .wh-row .wh-val{font-family:'Anton';font-size:20px;color:var(--olive-deep);}
+  .wh-row .wh-diff{font-size:11px;font-weight:700;margin-left:6px;}
+  .wh-row .wh-del{font-size:16px;cursor:pointer;color:var(--muted2);padding:4px;line-height:1;}
+  .wh-empty{font-size:13px;color:var(--muted2);text-align:center;padding:20px 0;font-weight:600;}
+  .wh-stats{display:flex;gap:8px;margin-bottom:16px;}
+  .wh-stat{flex:1;background:var(--bg);border:1px solid var(--card-edge);border-radius:12px;padding:10px;text-align:center;}
+  .wh-stat .wsv{font-family:'Anton';font-size:22px;color:var(--olive-deep);}
+  .wh-stat .wsl{font-size:10px;font-weight:700;color:var(--muted);margin-top:2px;}
 </style>
 </head>
 <body>
@@ -170,10 +207,10 @@
     <h1>Hanna</h1>
     <div class="sub">Análise de calorias &amp; balanço energético</div>
     <div class="chips">
-      <div class="chip">🎂 <b>36</b> anos</div>
-      <div class="chip">📏 <b>175</b> cm</div>
-      <div class="chip">⚖️ <b>83</b> kg</div>
-      <div class="chip">🚹 Homem</div>
+      <div class="chip" onclick="openProfileEdit('age')">🎂 <b class="chip-val" id="chipAge">36</b> anos <span class="edit-hint">✏️</span></div>
+      <div class="chip" onclick="openProfileEdit('height')">📏 <b class="chip-val" id="chipHeight">175</b> cm <span class="edit-hint">✏️</span></div>
+      <div class="chip chip-weight" onclick="openWeightModal()">⚖️ <b class="chip-val" id="chipWeight">83</b> kg <span class="edit-hint">📊</span></div>
+      <div class="chip" onclick="openProfileEdit('gender')"><span id="chipGenderIcon">🚹</span> <span class="chip-val" id="chipGender">Homem</span> <span class="edit-hint">✏️</span></div>
     </div>
   </header>
 
@@ -330,7 +367,6 @@ Ideal para o seu treino: 1,6 a 2,2 g/kg (~135-180 g). Esta um pouco abaixo do id
     <div class="acc-body">
       <div class="acc-inner">
         <div class="card" id="treadmill-card">
-
     <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:16px;">
       <div>
         <div style="font-size:13px;font-weight:800;color:var(--muted);letter-spacing:.04em;">🎯 30 MIN · ~380 KCAL</div>
@@ -338,8 +374,6 @@ Ideal para o seu treino: 1,6 a 2,2 g/kg (~135-180 g). Esta um pouco abaixo do id
       </div>
       <button id="tmBtn" onclick="tmToggle()" style="font-family:'Manrope';font-size:13px;font-weight:800;padding:10px 18px;border-radius:12px;border:none;background:var(--green);color:var(--bg);cursor:pointer;transition:.2s;">▶ Iniciar</button>
     </div>
-
-    <!-- timer display -->
     <div id="tmDisplay" style="display:none;background:var(--bg);border:1px solid var(--card-edge);border-radius:16px;padding:14px 16px;margin-bottom:14px;">
       <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
         <div>
@@ -355,11 +389,7 @@ Ideal para o seu treino: 1,6 a 2,2 g/kg (~135-180 g). Esta um pouco abaixo do id
         <div id="tmBarFill" style="height:100%;width:0%;background:linear-gradient(90deg,var(--olive-deep),var(--olive));transition:width .5s linear;border-radius:4px;"></div>
       </div>
     </div>
-
-    <!-- fases -->
     <div id="tmPhases"></div>
-
-    <!-- dicas -->
     <div style="margin-top:16px;padding:12px 14px;background:var(--bg);border:1px solid var(--card-edge);border-radius:14px;">
       <div style="font-size:11px;font-weight:800;color:var(--muted2);letter-spacing:.1em;margin-bottom:8px;">⚠️ DICAS</div>
       <div style="font-size:12.5px;color:var(--muted);font-weight:600;line-height:1.7;">
@@ -378,13 +408,232 @@ Ideal para o seu treino: 1,6 a 2,2 g/kg (~135-180 g). Esta um pouco abaixo do id
     <div class="nut">Renova Be · Nutrição</div>
     <div class="crn">CRN 43226</div>
     <div class="disc">Valores são estimativas educativas baseadas no seu plano e na sua rotina informada.
-    As queimas por treino são aproximações para 83 kg e variam com intensidade. Não substituem a avaliação da sua nutricionista.</div>
+    As queimas por treino são aproximações e variam com intensidade. Não substituem a avaliação da sua nutricionista.</div>
   </div>
 
 </div>
 
+<!-- ── MODAL: editar perfil ── -->
+<div class="modal-overlay" id="profileModal" onclick="closeModal('profileModal')">
+  <div class="modal-sheet" onclick="event.stopPropagation()">
+    <div class="modal-handle"></div>
+    <div class="modal-title" id="profileModalTitle">Editar</div>
+    <div id="profileModalBody"></div>
+    <button class="modal-btn" onclick="saveProfileField()">Salvar</button>
+    <button class="modal-btn modal-btn-sec" style="margin-top:8px;" onclick="closeModal('profileModal')">Cancelar</button>
+  </div>
+</div>
+
+<!-- ── MODAL: evolução do peso ── -->
+<div class="modal-overlay" id="weightModal" onclick="closeModal('weightModal')">
+  <div class="modal-sheet" onclick="event.stopPropagation()">
+    <div class="modal-handle"></div>
+    <div class="modal-title">⚖️ Evolução do Peso</div>
+
+    <!-- entrada -->
+    <div class="wh-entry-box">
+      <div class="modal-label">Registrar peso de hoje</div>
+      <div class="row">
+        <div class="col">
+          <input class="modal-input" type="number" id="whInput" placeholder="Ex: 72.5" step="0.1" min="30" max="250">
+        </div>
+        <button class="modal-btn" style="width:auto;padding:12px 18px;margin-top:0;" onclick="saveWeightEntry()">+ Salvar</button>
+      </div>
+    </div>
+
+    <!-- stats resumo -->
+    <div class="wh-stats" id="whStats" style="display:none;"></div>
+
+    <!-- chart -->
+    <div class="wh-chart-wrap" id="whChartWrap" style="display:none;">
+      <div class="wh-chart-title">Últimos 30 dias</div>
+      <svg id="whChart" width="100%" height="120" style="display:block;overflow:visible;"></svg>
+    </div>
+
+    <!-- lista -->
+    <div class="modal-label">Histórico</div>
+    <div class="wh-list" id="whList"></div>
+  </div>
+</div>
+
 <script>
-  /* ---------- data model ---------- */
+  /* ── PROFILE ── */
+  const PROFILE_KEY='hanna-profile-v1';
+  let profile={age:36,height:175,weight:83,gender:'Homem'};
+
+  function loadProfile(){
+    try{ const s=localStorage.getItem(PROFILE_KEY); if(s) profile=Object.assign(profile,JSON.parse(s)); }catch(e){}
+    renderProfileChips();
+  }
+  function saveProfile(){ try{ localStorage.setItem(PROFILE_KEY,JSON.stringify(profile)); }catch(e){} }
+  function renderProfileChips(){
+    document.getElementById('chipAge').textContent=profile.age;
+    document.getElementById('chipHeight').textContent=profile.height;
+    document.getElementById('chipWeight').textContent=profile.weight;
+    document.getElementById('chipGender').textContent=profile.gender;
+    document.getElementById('chipGenderIcon').textContent=profile.gender==='Homem'?'🚹':'🚺';
+  }
+
+  let _editField=null;
+  function openProfileEdit(field){
+    _editField=field;
+    const titles={age:'Editar Idade',height:'Editar Altura',gender:'Editar Gênero'};
+    document.getElementById('profileModalTitle').textContent=titles[field];
+    const body=document.getElementById('profileModalBody');
+    if(field==='gender'){
+      const sel=profile.gender;
+      body.innerHTML=`<div class="gender-opts">
+        <button class="gender-opt${sel==='Homem'?' sel':''}" id="gOptH" onclick="selectGender('Homem')">🚹 Homem</button>
+        <button class="gender-opt${sel==='Mulher'?' sel':''}" id="gOptM" onclick="selectGender('Mulher')">🚺 Mulher</button>
+      </div>`;
+    } else {
+      const labels={age:'Idade (anos)',height:'Altura (cm)'};
+      const types={age:'number',height:'number'};
+      body.innerHTML=`<div class="modal-label">${labels[field]}</div>
+        <input class="modal-input" id="profileInput" type="${types[field]}" value="${profile[field]}" min="1" max="250">`;
+      setTimeout(()=>{ const inp=document.getElementById('profileInput'); if(inp){inp.focus();inp.select();} },300);
+    }
+    openModal('profileModal');
+  }
+
+  function selectGender(g){
+    document.getElementById('gOptH').classList.toggle('sel',g==='Homem');
+    document.getElementById('gOptM').classList.toggle('sel',g==='Mulher');
+    _editField='gender'; profile.gender=g;
+  }
+
+  function saveProfileField(){
+    if(_editField==='gender'){
+      saveProfile(); renderProfileChips(); closeModal('profileModal'); return;
+    }
+    const inp=document.getElementById('profileInput');
+    const v=parseFloat(inp.value);
+    if(!isNaN(v)&&v>0){ profile[_editField]=Math.round(v*10)/10; saveProfile(); renderProfileChips(); }
+    closeModal('profileModal');
+  }
+
+  /* ── WEIGHT HISTORY ── */
+  const WEIGHT_KEY='hanna-weight-history-v1';
+  let weightHistory=[];
+
+  function loadWeightHistory(){
+    try{ const s=localStorage.getItem(WEIGHT_KEY); if(s) weightHistory=JSON.parse(s); }catch(e){ weightHistory=[]; }
+  }
+  function saveWeightHistory(){ try{ localStorage.setItem(WEIGHT_KEY,JSON.stringify(weightHistory)); }catch(e){} }
+
+  function todayStr(){
+    const d=new Date();
+    return d.getFullYear()+'-'+(d.getMonth()+1+'').padStart(2,'0')+'-'+(d.getDate()+'').padStart(2,'0');
+  }
+  function fmtDate(str){
+    const [y,m,d]=str.split('-');
+    return d+'/'+m+'/'+y.slice(2);
+  }
+
+  function saveWeightEntry(){
+    const inp=document.getElementById('whInput');
+    const v=parseFloat(inp.value.replace(',','.'));
+    if(isNaN(v)||v<30||v>250){ inp.focus(); return; }
+    const today=todayStr();
+    const existing=weightHistory.findIndex(e=>e.date===today);
+    if(existing>=0) weightHistory[existing].weight=v;
+    else weightHistory.push({date:today,weight:v});
+    weightHistory.sort((a,b)=>b.date.localeCompare(a.date));
+    saveWeightHistory();
+    // atualiza chip de peso com o valor mais recente
+    profile.weight=v;
+    saveProfile(); renderProfileChips();
+    inp.value='';
+    renderWeightModal();
+  }
+
+  function deleteWeightEntry(date){
+    weightHistory=weightHistory.filter(e=>e.date!==date);
+    saveWeightHistory(); renderWeightModal();
+  }
+
+  function openWeightModal(){
+    loadWeightHistory();
+    renderWeightModal();
+    openModal('weightModal');
+  }
+
+  function renderWeightModal(){
+    const list=document.getElementById('whList');
+    const statsEl=document.getElementById('whStats');
+    const chartWrap=document.getElementById('whChartWrap');
+
+    if(weightHistory.length===0){
+      list.innerHTML='<div class="wh-empty">Nenhum registro ainda.<br>Registre seu peso acima! 📝</div>';
+      statsEl.style.display='none'; chartWrap.style.display='none'; return;
+    }
+
+    // stats
+    const vals=weightHistory.map(e=>e.weight);
+    const first=weightHistory[weightHistory.length-1].weight;
+    const last=weightHistory[0].weight;
+    const diff=Math.round((last-first)*10)/10;
+    const min=Math.min(...vals), max=Math.max(...vals);
+    const sign=diff>0?'+':'';
+    statsEl.style.display='flex';
+    statsEl.innerHTML=`
+      <div class="wh-stat"><div class="wsv">${last.toFixed(1)}</div><div class="wsl">Atual (kg)</div></div>
+      <div class="wh-stat"><div class="wsv" style="color:${diff<=0?'var(--olive-deep)':'var(--hazel-deep)'}">${sign}${diff.toFixed(1)}</div><div class="wsl">Variação total</div></div>
+      <div class="wh-stat"><div class="wsv">${weightHistory.length}</div><div class="wsl">Registros</div></div>`;
+
+    // chart (últimos 14 registros, ordem cronológica)
+    chartWrap.style.display='block';
+    const chartData=[...weightHistory].reverse().slice(-14);
+    drawWeightChart(chartData);
+
+    // lista
+    list.innerHTML='';
+    weightHistory.forEach((e,i)=>{
+      const prev=weightHistory[i+1];
+      let diffHtml='';
+      if(prev){
+        const d=Math.round((e.weight-prev.weight)*10)/10;
+        const color=d<0?'var(--olive-deep)':d>0?'var(--hazel-deep)':'var(--muted2)';
+        const s=d>0?'+':'';
+        diffHtml=`<span class="wh-diff" style="color:${color}">${s}${d.toFixed(1)}</span>`;
+      }
+      const row=document.createElement('div');
+      row.className='wh-row';
+      row.innerHTML=`<span class="wh-date">${fmtDate(e.date)}${i===0?' <b style="color:var(--olive-deep);font-size:10px;">HOJE</b>':''}</span>
+        <span style="display:flex;align-items:baseline;gap:2px;"><span class="wh-val">${e.weight.toFixed(1)}</span><span style="font-size:11px;color:var(--muted);font-weight:700;"> kg</span>${diffHtml}</span>
+        <span class="wh-del" onclick="deleteWeightEntry('${e.date}')">✕</span>`;
+      list.appendChild(row);
+    });
+  }
+
+  function drawWeightChart(data){
+    const svg=document.getElementById('whChart');
+    if(!data||data.length<2){ svg.innerHTML=''; return; }
+    const W=svg.parentElement.clientWidth-28||300;
+    const H=100, PAD=4;
+    const vals=data.map(d=>d.weight);
+    const minV=Math.min(...vals), maxV=Math.max(...vals);
+    const range=maxV-minV||1;
+    const xs=data.map((_,i)=>PAD+i*(W-PAD*2)/(data.length-1));
+    const ys=vals.map(v=>H-PAD-(v-minV)/(range)*(H-PAD*2));
+
+    const pts=xs.map((x,i)=>`${x},${ys[i]}`).join(' ');
+    const area=`M${xs[0]},${ys[0]} `+xs.slice(1).map((x,i)=>`L${x},${ys[i+1]}`).join(' ')+` L${xs[xs.length-1]},${H} L${xs[0]},${H} Z`;
+
+    svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
+    svg.innerHTML=`
+      <defs><linearGradient id="wgr" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="var(--olive)" stop-opacity=".3"/><stop offset="100%" stop-color="var(--olive)" stop-opacity="0"/></linearGradient></defs>
+      <path d="${area}" fill="url(#wgr)"/>
+      <polyline points="${pts}" fill="none" stroke="var(--olive-deep)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+      ${xs.map((x,i)=>`<circle cx="${x}" cy="${ys[i]}" r="3.5" fill="var(--olive-deep)"/>`).join('')}
+      ${data.length<=7?xs.map((x,i)=>`<text x="${x}" y="${H}" text-anchor="middle" font-size="8" fill="var(--muted2)" font-family="Manrope" font-weight="700">${fmtDate(data[i].date).slice(0,5)}</text>`).join(''):''}`;
+  }
+
+  /* ── MODAL HELPERS ── */
+  function openModal(id){ document.getElementById(id).classList.add('open'); document.body.style.overflow='hidden'; }
+  function closeModal(id){ document.getElementById(id).classList.remove('open'); document.body.style.overflow=''; }
+
+  /* ── DATA MODEL ── */
   const BASE=2300, CONSUMO=2100;
   const WORKOUTS={
     boxe:    {icon:'🥊', name:'Boxe',                 detail:'aula · 1h30', kcal:850},
@@ -393,8 +642,6 @@ Ideal para o seu treino: 1,6 a 2,2 g/kg (~135-180 g). Esta um pouco abaixo do id
     bike:    {icon:'🚴', name:'Bike na rua',          detail:'10 km',      kcal:300},
     esteira: {icon:'🏃', name:'Esteira protocolo',    detail:'30 min · intervalado', kcal:380},
   };
-
-  /* ---------- treadmill phases ---------- */
   const TM_PHASES=[
     {start:0,  end:4,  name:'Aquecimento',      inc:4,  vel:4.5, tip:'Ativa glúteos e core, prepara a frequência cardíaca.', color:'#a8b85e', bg:'#f4f8e6'},
     {start:4,  end:9,  name:'Subida progressiva',inc:8,  vel:5.0, tip:'Já entra na zona de queima, respiração acelera mas controlada.', color:'#8a9e44', bg:'#eef4d8'},
@@ -404,96 +651,51 @@ Ideal para o seu treino: 1,6 a 2,2 g/kg (~135-180 g). Esta um pouco abaixo do id
     {start:22, end:27, name:'Pico final',        inc:13, vel:4.7, tip:'Último esforço forte. É onde mais se queima.', color:'#b07030', bg:'#fdf0e0'},
     {start:27, end:30, name:'Desaceleração',     inc:4,  vel:4.0, tip:'Reduz aos poucos para a frequência voltar ao normal.', color:'#888888', bg:'#f5f5f5'},
   ];
-  const TM_TOTAL=30*60; // 1800s
+  const TM_TOTAL=30*60;
   let tmInterval=null, tmElapsed=0, tmRunning=false;
 
-  function tmPhaseAt(sec){
-    const min=sec/60;
-    return TM_PHASES.findIndex(p=>min>=p.start&&min<p.end);
-  }
-
-  function tmFmtTime(sec){
-    const m=Math.floor(sec/60), s=sec%60;
-    return String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
-  }
-
+  function tmPhaseAt(sec){ const min=sec/60; return TM_PHASES.findIndex(p=>min>=p.start&&min<p.end); }
+  function tmFmtTime(sec){ const m=Math.floor(sec/60),s=sec%60; return String(m).padStart(2,'0')+':'+String(s).padStart(2,'0'); }
   function tmRender(){
-    const idx=tmRunning||tmElapsed>0 ? tmPhaseAt(tmElapsed) : -1;
+    const idx=tmRunning||tmElapsed>0?tmPhaseAt(tmElapsed):-1;
     const c=document.getElementById('tmPhases'); if(!c)return;
     c.innerHTML='';
     TM_PHASES.forEach((p,i)=>{
-      const active=(i===idx);
-      const done=tmElapsed>0&&(tmElapsed/60)>=p.end;
-      const dur=p.end-p.start;
+      const active=(i===idx), done=tmElapsed>0&&(tmElapsed/60)>=p.end, dur=p.end-p.start;
       const div=document.createElement('div');
       div.style.cssText=`display:flex;gap:12px;padding:12px 10px;border-radius:14px;margin-bottom:6px;border:1px solid ${active?p.color:'var(--card-edge)'};background:${active?p.bg:'transparent'};transition:.3s;`;
       if(active) div.style.boxShadow=`0 2px 12px ${p.color}33`;
-      div.innerHTML=`
-        <div style="min-width:36px;text-align:center;padding-top:2px;">
-          <div style="font-size:10px;font-weight:800;color:${done?'var(--muted2)':active?p.color:'var(--muted2)'};letter-spacing:.04em;">${p.start}–${p.end}</div>
-          <div style="font-size:9px;color:var(--muted2);font-weight:600;">${dur} min</div>
-        </div>
-        <div style="flex:1;min-width:0;">
-          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-            <span style="font-size:14px;font-weight:800;color:${done?'var(--muted2)':active?p.color:'var(--ink)'}">${p.name}</span>
-            ${active?`<span style="font-size:9px;font-weight:900;letter-spacing:.08em;color:#fff;background:${p.color};padding:2px 7px;border-radius:6px;">AGORA</span>`:''}
-            ${done?`<span style="font-size:9px;font-weight:900;color:var(--muted2);">✓</span>`:''}
-          </div>
-          <div style="display:flex;gap:12px;margin-top:4px;">
-            <span style="font-size:12px;font-weight:700;color:var(--muted);">📐 Inc: <b style="color:${active?p.color:'var(--ink)'}">${p.inc}</b></span>
-            <span style="font-size:12px;font-weight:700;color:var(--muted);">⚡ Vel: <b style="color:${active?p.color:'var(--ink)'}">${p.vel.toFixed(1)}</b> km/h</span>
-          </div>
-          <div style="font-size:11.5px;color:var(--muted);margin-top:3px;font-weight:600;">${p.tip}</div>
-        </div>`;
+      div.innerHTML=`<div style="min-width:36px;text-align:center;padding-top:2px;"><div style="font-size:10px;font-weight:800;color:${done?'var(--muted2)':active?p.color:'var(--muted2)'};letter-spacing:.04em;">${p.start}–${p.end}</div><div style="font-size:9px;color:var(--muted2);font-weight:600;">${dur} min</div></div>
+        <div style="flex:1;min-width:0;"><div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;"><span style="font-size:14px;font-weight:800;color:${done?'var(--muted2)':active?p.color:'var(--ink)'}">${p.name}</span>${active?`<span style="font-size:9px;font-weight:900;letter-spacing:.08em;color:#fff;background:${p.color};padding:2px 7px;border-radius:6px;">AGORA</span>`:''}${done?`<span style="font-size:9px;font-weight:900;color:var(--muted2);">✓</span>`:''}</div>
+        <div style="display:flex;gap:12px;margin-top:4px;"><span style="font-size:12px;font-weight:700;color:var(--muted);">📐 Inc: <b style="color:${active?p.color:'var(--ink)'}">${p.inc}</b></span><span style="font-size:12px;font-weight:700;color:var(--muted);">⚡ Vel: <b style="color:${active?p.color:'var(--ink)'}">${p.vel.toFixed(1)}</b> km/h</span></div>
+        <div style="font-size:11.5px;color:var(--muted);margin-top:3px;font-weight:600;">${p.tip}</div></div>`;
       c.appendChild(div);
     });
   }
-
   function tmUpdateDisplay(){
-    const clock=document.getElementById('tmClock');
-    const nextEl=document.getElementById('tmNext');
-    const fill=document.getElementById('tmBarFill');
+    const clock=document.getElementById('tmClock'), nextEl=document.getElementById('tmNext'), fill=document.getElementById('tmBarFill');
     if(!clock)return;
     clock.textContent=tmFmtTime(tmElapsed);
     const idx=tmPhaseAt(tmElapsed);
-    if(idx>=0&&idx<TM_PHASES.length){
-      const p=TM_PHASES[idx];
-      const secLeft=Math.max(0,p.end*60-tmElapsed);
-      nextEl.textContent=tmFmtTime(secLeft);
-    } else {
-      nextEl.textContent='–';
-    }
+    if(idx>=0&&idx<TM_PHASES.length){ const p=TM_PHASES[idx]; nextEl.textContent=tmFmtTime(Math.max(0,p.end*60-tmElapsed)); }
+    else nextEl.textContent='–';
     if(fill) fill.style.width=Math.min(100,(tmElapsed/TM_TOTAL)*100)+'%';
     tmRender();
   }
-
   function tmToggle(){
-    const btn=document.getElementById('tmBtn');
-    const disp=document.getElementById('tmDisplay');
+    const btn=document.getElementById('tmBtn'), disp=document.getElementById('tmDisplay');
     if(!tmRunning&&tmElapsed>=TM_TOTAL){ tmElapsed=0; }
     if(tmRunning){
       clearInterval(tmInterval); tmRunning=false;
-      btn.textContent='▶ Continuar';
-      btn.style.background='var(--green)';
+      btn.textContent='▶ Continuar'; btn.style.background='var(--green)';
     } else {
-      disp.style.display='block';
-      tmRunning=true;
-      btn.textContent='⏸ Pausar';
-      btn.style.background='var(--coral)';
-      tmInterval=setInterval(()=>{
-        tmElapsed++;
-        tmUpdateDisplay();
-        if(tmElapsed>=TM_TOTAL){
-          clearInterval(tmInterval); tmRunning=false;
-          btn.textContent='✓ Concluído';
-          btn.style.background='#2a3a2c';
-          btn.style.color='var(--green)';
-        }
-      },1000);
+      disp.style.display='block'; tmRunning=true;
+      btn.textContent='⏸ Pausar'; btn.style.background='var(--coral)';
+      tmInterval=setInterval(()=>{ tmElapsed++; tmUpdateDisplay(); if(tmElapsed>=TM_TOTAL){ clearInterval(tmInterval); tmRunning=false; btn.textContent='✓ Concluído'; btn.style.background='#2a3a2c'; btn.style.color='var(--green)'; }},1000);
     }
     tmUpdateDisplay();
   }
-  // index = getDay(): 0=Dom ... 6=Sáb
+
   const WEEK=[
     {key:'dom',label:'Domingo',w:'bike'},
     {key:'seg',label:'Segunda',w:'boxe'},
@@ -510,35 +712,24 @@ Ideal para o seu treino: 1,6 a 2,2 g/kg (~135-180 g). Esta um pouco abaixo do id
 
   const fmt=n=>Math.round(n).toLocaleString('pt-BR');
   function weekKey(){const d=new Date();const oj=new Date(d.getFullYear(),0,1);const wk=Math.ceil((((d-oj)/86400000)+oj.getDay()+1)/7);return d.getFullYear()+'-W'+wk;}
-
   let MEM=null;
   function readStore(){ try{ const s=localStorage.getItem(SKEY); return s?JSON.parse(s):MEM; }catch(e){ return MEM; } }
   function writeStore(o){ try{ localStorage.setItem(SKEY, JSON.stringify(o)); }catch(e){ MEM=o; } }
   function loadChecks(){ const o=readStore(); if(o&&o.wk===weekKey()&&o.checks){ checks=Object.assign(checks,o.checks); } }
   function saveChecks(){ writeStore({wk:weekKey(),checks}); }
-
   function bumpEl(el){el.classList.remove('bump');void el.offsetWidth;el.classList.add('bump');}
 
   function recalc(){
     const tw=WORKOUTS[WEEK[todayIdx].w];
     const todayKcal=checks[todayKey]?tw.kcal:0;
-    const gasto=BASE+todayKcal;
-    const def=gasto-CONSUMO;
-    const kg=def/1100; // (def*7)/7700
-
+    const gasto=BASE+todayKcal, def=gasto-CONSUMO, kg=def/1100;
     const g=document.getElementById('gastoHoje');
     g.innerHTML=fmt(gasto)+'<span class="u">kcal</span>'; bumpEl(g);
-    document.getElementById('gastoBreak').textContent = todayKcal>0
-      ? `base ${fmt(BASE)} + ${tw.name.toLowerCase()} ${fmt(todayKcal)}`
-      : `base ${fmt(BASE)} · marque o treino de hoje p/ somar`;
-
+    document.getElementById('gastoBreak').textContent=todayKcal>0?`base ${fmt(BASE)} + ${tw.name.toLowerCase()} ${fmt(todayKcal)}`:`base ${fmt(BASE)} · marque o treino de hoje p/ somar`;
     const dn=document.getElementById('defNum');
     dn.textContent='~'+fmt(def); bumpEl(dn);
-    document.getElementById('defNarr').textContent = todayKcal>0
-      ? `Gasto de hoje (${fmt(gasto)}) − consumo (${fmt(CONSUMO)}). Treino de hoje já somado.`
-      : `Base do dia (${fmt(BASE)}) − consumo (${fmt(CONSUMO)}). Marque o treino de hoje na agenda acima para somar o gasto do exercício.`;
-    document.getElementById('defBadge').textContent = `⬇️ ~${kg.toFixed(1).replace('.',',')} kg por semana nesse ritmo`;
-
+    document.getElementById('defNarr').textContent=todayKcal>0?`Gasto de hoje (${fmt(gasto)}) − consumo (${fmt(CONSUMO)}). Treino de hoje já somado.`:`Base do dia (${fmt(BASE)}) − consumo (${fmt(CONSUMO)}). Marque o treino de hoje na agenda acima para somar o gasto do exercício.`;
+    document.getElementById('defBadge').textContent=`⬇️ ~${kg.toFixed(1).replace('.',',')} kg por semana nesse ritmo`;
     let burned=0,done=0;
     WEEK.forEach(d=>{ if(checks[d.key]){ burned+=WORKOUTS[d.w].kcal; done++; }});
     document.getElementById('wkDone').textContent=done;
@@ -548,37 +739,21 @@ Ideal para o seu treino: 1,6 a 2,2 g/kg (~135-180 g). Esta um pouco abaixo do id
   function buildAgenda(){
     const c=document.getElementById('agenda'); c.innerHTML='';
     WEEK.forEach((d,i)=>{
-      const w=WORKOUTS[d.w]; const isToday=(i===todayIdx);
+      const w=WORKOUTS[d.w], isToday=(i===todayIdx);
       const row=document.createElement('div');
       row.className='day'+(isToday?' today':'');
-      row.innerHTML=
-        '<div class="mic">'+w.icon+'</div>'+
-        '<div class="dmid"><div class="dname">'+d.label+(isToday?' <span class="badge-today">HOJE</span>':'')+'</div>'+
-        '<div class="ddet">'+w.name+' · '+w.detail+'</div></div>'+
-        '<div class="dkcal">+'+fmt(w.kcal)+'</div>'+
-        '<button class="toggle'+(checks[d.key]?' on':'')+'" aria-label="marcar '+d.label+'">✓</button>';
+      row.innerHTML='<div class="mic">'+w.icon+'</div><div class="dmid"><div class="dname">'+d.label+(isToday?' <span class="badge-today">HOJE</span>':'')+'</div><div class="ddet">'+w.name+' · '+w.detail+'</div></div><div class="dkcal">+'+fmt(w.kcal)+'</div><button class="toggle'+(checks[d.key]?' on':'')+'" aria-label="marcar '+d.label+'">✓</button>';
       const btn=row.querySelector('.toggle');
-      btn.addEventListener('click',()=>{
-        checks[d.key]=checks[d.key]?0:1;
-        btn.classList.toggle('on',!!checks[d.key]);
-        saveChecks(); recalc();
-      });
+      btn.addEventListener('click',()=>{ checks[d.key]=checks[d.key]?0:1; btn.classList.toggle('on',!!checks[d.key]); saveChecks(); recalc(); });
       c.appendChild(row);
     });
   }
 
-  /* ---------- reveal + count-up for static numbers ---------- */
+  /* reveal + count-up */
   const revs=[...document.querySelectorAll('.reveal')];
   revs.forEach((el,i)=>el.style.transitionDelay=(Math.min(i,8)*60)+'ms');
   const io=new IntersectionObserver((es)=>{
-    es.forEach(e=>{
-      if(e.isIntersecting){
-        e.target.classList.add('in');
-        e.target.querySelectorAll('.fill,.efill,.pfill').forEach(f=>{f.style.width=f.dataset.pct+'%';});
-        e.target.querySelectorAll('[data-count]').forEach(countUp);
-        io.unobserve(e.target);
-      }
-    });
+    es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); e.target.querySelectorAll('.fill,.efill,.pfill').forEach(f=>{f.style.width=f.dataset.pct+'%';}); e.target.querySelectorAll('[data-count]').forEach(countUp); io.unobserve(e.target); }});
   },{threshold:.18});
   revs.forEach(el=>io.observe(el));
   function countUp(el){
@@ -587,34 +762,26 @@ Ideal para o seu treino: 1,6 a 2,2 g/kg (~135-180 g). Esta um pouco abaixo do id
     (function tick(t){const p=Math.min(1,(t-t0)/dur);const e=1-Math.pow(1-p,3);el.textContent=Math.round(target*e).toLocaleString('pt-BR');if(p<1)requestAnimationFrame(tick);})(t0);
   }
 
-  /* ---------- copy buttons ---------- */
+  /* copy buttons */
   document.querySelectorAll('.copy').forEach(btn=>{
     btn.addEventListener('click',async()=>{
       const txt=btn.getAttribute('data-copy'); let ok=false;
       try{ await navigator.clipboard.writeText(txt); ok=true; }
       catch(e){ try{ const ta=document.createElement('textarea'); ta.value=txt; ta.style.position='fixed'; ta.style.opacity='0'; document.body.appendChild(ta); ta.focus(); ta.select(); ok=document.execCommand('copy'); document.body.removeChild(ta);}catch(_){ok=false;} }
-      const orig=btn.innerHTML; btn.classList.add('done'); btn.textContent= ok?'✓ copiado!':'selecione o texto';
-      setTimeout(()=>{btn.classList.remove('done');btn.innerHTML=orig;},1600);
+      const orig=btn.innerHTML; btn.classList.add('done'); btn.textContent=ok?'✓ copiado!':'selecione o texto';
+      setTimeout(()=>{ btn.classList.remove('done'); btn.innerHTML=orig; },1600);
     });
   });
 
-  /* ---------- accordion ---------- */
+  /* accordion */
   function accToggle(header){
-    const body=header.nextElementSibling;
-    const isOpen=header.classList.contains('open');
-    header.classList.toggle('open',!isOpen);
-    body.classList.toggle('open',!isOpen);
-    // dispara fills e count-ups quando abre
-    if(!isOpen){
-      setTimeout(()=>{
-        body.querySelectorAll('.fill,.pfill').forEach(f=>{f.style.width=f.dataset.pct+'%';});
-        body.querySelectorAll('[data-count]').forEach(el=>{if(!el.dataset.done)countUp(el);});
-      },80);
-    }
+    const body=header.nextElementSibling, isOpen=header.classList.contains('open');
+    header.classList.toggle('open',!isOpen); body.classList.toggle('open',!isOpen);
+    if(!isOpen){ setTimeout(()=>{ body.querySelectorAll('.fill,.pfill').forEach(f=>{f.style.width=f.dataset.pct+'%';}); body.querySelectorAll('[data-count]').forEach(el=>{if(!el.dataset.done)countUp(el);}); },80); }
   }
 
-  /* ---------- init ---------- */
-  loadChecks(); buildAgenda(); recalc(); tmRender();
+  /* init */
+  loadProfile(); loadChecks(); buildAgenda(); recalc(); tmRender();
 </script>
 </body>
 </html>
