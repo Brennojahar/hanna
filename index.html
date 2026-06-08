@@ -214,49 +214,6 @@
     </div>
   </header>
 
-  <div class="sec-h reveal"><span class="dot"></span><h2>Média estimada</h2></div>
-  <div class="trio">
-    <div class="stat eat reveal"><div class="glow"></div>
-      <div class="ic">🍴</div><div class="lab">Você consome</div>
-      <div class="num" data-count="2100">0</div><span class="unit">kcal/dia</span>
-    </div>
-    <div class="stat burn reveal"><div class="glow"></div>
-      <div class="ic">🔥</div><div class="lab">Gasto médio/dia</div>
-      <div class="num" data-count="2700">0</div><span class="unit">kcal/dia</span>
-    </div>
-    <div class="stat def reveal pulse"><div class="glow"></div>
-      <div class="ic">📉</div><div class="lab">Déficit médio</div>
-      <div class="num" data-count="600">0</div><span class="unit">kcal/dia</span>
-    </div>
-  </div>
-
-  <!-- ACCORDION: Calorias por refeição -->
-  <div class="acc-wrap reveal">
-    <div class="acc-header" onclick="accToggle(this)">
-      <div class="acc-header-left"><span class="acc-dot"></span><span class="acc-title">Calorias por refeição</span></div>
-      <div class="acc-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div>
-    </div>
-    <div class="acc-body">
-      <div class="acc-inner">
-        <div class="card">
-          <button class="copy" data-copy="Calorias por refeicao (estimativa):
-- Cafe da manha (06:30): ~390 kcal
-- Almoco (13:00): ~600 kcal
-- Lanche da tarde (16:00): ~205 kcal
-- Pre-treino (18:30): ~190 kcal
-- Jantar (21:00): ~720 kcal
-TOTAL DIARIO: ~2.100 kcal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>copiar</button>
-          <div class="meal"><div class="mic">☕</div><div class="mbody"><div class="mtop"><div><div class="mname">Café da manhã</div><div class="mtime">06:30</div></div><div class="mkcal">390</div></div><div class="track"><div class="fill" data-pct="54"></div></div></div></div>
-          <div class="meal"><div class="mic">🍽️</div><div class="mbody"><div class="mtop"><div><div class="mname">Almoço</div><div class="mtime">13:00</div></div><div class="mkcal">600</div></div><div class="track"><div class="fill" data-pct="83"></div></div></div></div>
-          <div class="meal"><div class="mic">🥪</div><div class="mbody"><div class="mtop"><div><div class="mname">Lanche da tarde</div><div class="mtime">16:00</div></div><div class="mkcal">205</div></div><div class="track"><div class="fill" data-pct="28"></div></div></div></div>
-          <div class="meal"><div class="mic">⚡</div><div class="mbody"><div class="mtop"><div><div class="mname">Pré-treino</div><div class="mtime">18:30</div></div><div class="mkcal">190</div></div><div class="track"><div class="fill" data-pct="26"></div></div></div></div>
-          <div class="meal"><div class="mic">🌙</div><div class="mbody"><div class="mtop"><div><div class="mname">Jantar</div><div class="mtime">21:00</div></div><div class="mkcal">720</div></div><div class="track"><div class="fill" data-pct="100"></div></div></div></div>
-          <div class="total-row"><div class="tl">Total diário</div><div class="tv"><span data-count="2100">0</span> <span class="unit">kcal</span></div></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <!-- ACCORDION: Gasto energético -->
   <div class="acc-wrap reveal">
     <div class="acc-header" onclick="accToggle(this)">
@@ -288,71 +245,6 @@ Gasto do dia = base + treino que voce marcou."><svg viewBox="0 0 24 24" fill="no
             <div class="wb"><div class="wv" id="wkBurned">0</div><div class="wl">kcal queimadas/sem</div></div>
           </div>
           <div class="hint">💡 <span>Gasto de hoje = base (metabolismo + rotina) + o treino marcado de hoje. Assim o exercício não é contado duas vezes.</span></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ACCORDION: Déficit -->
-  <div class="acc-wrap reveal">
-    <div class="acc-header" onclick="accToggle(this)">
-      <div class="acc-header-left"><span class="acc-dot"></span><span class="acc-title">Seu déficit hoje</span></div>
-      <div class="acc-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div>
-    </div>
-    <div class="acc-body">
-      <div class="acc-inner">
-        <div class="card def-card">
-          <button class="copy" data-copy="Deficit de hoje = gasto do dia - consumo (~2.100 kcal).
-Em dia sem treino: ~200 kcal. Com treino marcado, sobe conforme a queima do exercicio.
-~7.700 kcal equivalem a ~1 kg de gordura."><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>copiar</button>
-          <div class="big"><div class="bn" id="defNum">~200</div><div class="bu">kcal / dia</div></div>
-          <p id="defNarr">Base do dia (2.300) − consumo (2.100). Marque o treino de hoje na agenda acima para somar o gasto do exercício.</p>
-          <div class="lossbadge" id="defBadge">⬇️ ~0,2 kg por semana nesse ritmo</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ACCORDION: Proteína -->
-  <div class="acc-wrap reveal">
-    <div class="acc-header" onclick="accToggle(this)">
-      <div class="acc-header-left"><span class="acc-dot"></span><span class="acc-title">Proteína do dia</span></div>
-      <div class="acc-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div>
-    </div>
-    <div class="acc-body">
-      <div class="acc-inner">
-        <div class="card pgauge">
-          <button class="copy" data-copy="Proteina estimada do plano: ~115-125 g/dia (~1,4 g por kg).
-Ideal para o seu treino: 1,6 a 2,2 g/kg (~135-180 g). Esta um pouco abaixo do ideal."><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>copiar</button>
-          <div class="pn"><span data-count="120">0</span> <span class="unit">g/dia &nbsp;(~1,4 g/kg)</span></div>
-          <div class="ideal">Ideal p/ seu treino: 135–180 g (1,6–2,2 g/kg)</div>
-          <div class="ptrack"><div class="pfill" data-pct="67"></div><div class="pmark" style="left:80%"></div></div>
-          <div class="prange"><span>0 g</span><span>180 g</span></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ACCORDION: Insights -->
-  <div class="acc-wrap reveal">
-    <div class="acc-header" onclick="accToggle(this)">
-      <div class="acc-header-left"><span class="acc-dot"></span><span class="acc-title">Insights principais</span></div>
-      <div class="acc-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div>
-    </div>
-    <div class="acc-body">
-      <div class="acc-inner">
-        <div class="card">
-          <button class="copy" data-copy="Insights principais:
-1. Modelo de gasto: base (~2.300) + treino marcado do dia.
-2. Em dia sem treino o deficit e pequeno (~200); treinar e o que cria o deficit relevante.
-3. Proteina um pouco abaixo do ideal para o volume de treino.
-4. Consumo real pode ser maior (saladas a vontade, azeites, substituicoes).
-5. Acompanhar peso e medidas a cada 2-3 semanas e ajustar.
-6. Validar com a nutricionista (CRN 43226)."><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>copiar</button>
-          <div class="ins"><div class="ii">🏋️</div><div class="it">O <b>treino é o motor do déficit</b>: num dia parado o déficit é pequeno (~200); marcando o treino ele sobe de verdade.</div></div>
-          <div class="ins"><div class="ii">🥩</div><div class="it">Proteína está <span class="warn">um pouco abaixo</span> do ideal para o seu volume de treino.</div></div>
-          <div class="ins"><div class="ii">🥗</div><div class="it">Consumo real pode ser maior (saladas à vontade, azeites, substituições) — o que <b>reduz o déficit</b>.</div></div>
-          <div class="ins"><div class="ii">📅</div><div class="it">Acompanhe <b>peso e medidas a cada 2–3 semanas</b> e ajuste conforme o resultado.</div></div>
         </div>
       </div>
     </div>
