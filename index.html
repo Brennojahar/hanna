@@ -198,6 +198,70 @@
   .wh-stat{flex:1;background:var(--bg);border:1px solid var(--card-edge);border-radius:12px;padding:10px;text-align:center;}
   .wh-stat .wsv{font-family:'Anton';font-size:22px;color:var(--olive-deep);}
   .wh-stat .wsl{font-size:10px;font-weight:700;color:var(--muted);margin-top:2px;}
+
+  /* ── TREINOS (lista de cards) ── */
+  .wk-list{display:flex;flex-direction:column;gap:14px;}
+  .wk-card{background:var(--card);border:1px solid var(--card-edge);border-radius:22px;overflow:hidden;box-shadow:0 2px 16px rgba(0,0,0,.06);cursor:pointer;transition:transform .15s,box-shadow .2s;}
+  .wk-card:active{transform:scale(.985);}
+  .wk-cover{position:relative;width:100%;aspect-ratio:16/9;background:linear-gradient(135deg,#2a2540,#1a1730);display:grid;place-items:center;overflow:hidden;}
+  .wk-cover img{width:100%;height:100%;object-fit:cover;}
+  .wk-cover .ph{display:flex;flex-direction:column;align-items:center;gap:6px;color:rgba(255,255,255,.4);}
+  .wk-cover .ph svg{width:34px;height:34px;stroke:rgba(255,255,255,.4);}
+  .wk-cover .ph span{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;}
+  .wk-cover .play{position:absolute;right:16px;bottom:14px;width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,.92);display:grid;place-items:center;box-shadow:0 4px 16px rgba(0,0,0,.3);}
+  .wk-cover .play svg{width:18px;height:18px;fill:#282828;margin-left:3px;}
+  .wk-cover .dur-badge{position:absolute;left:14px;bottom:14px;display:flex;align-items:center;gap:6px;background:rgba(0,0,0,.55);backdrop-filter:blur(6px);color:#fff;font-size:12px;font-weight:700;padding:6px 11px;border-radius:100px;}
+  .wk-body{padding:16px 18px 18px;}
+  .wk-body h3{font-family:'Anton',sans-serif;font-weight:400;font-size:24px;line-height:1.02;letter-spacing:.01em;text-transform:uppercase;color:var(--ink);}
+  .wk-meta{display:flex;align-items:center;gap:8px;margin-top:8px;flex-wrap:wrap;}
+  .wk-meta .wk-tag{font-size:11px;font-weight:700;color:var(--muted);background:var(--bg);border:1px solid var(--card-edge);padding:5px 10px;border-radius:8px;}
+  .wk-meta .wk-tag b{color:var(--olive-deep);}
+
+  /* ── TREINO DETALHE (modal full) ── */
+  .modal-full{align-items:stretch;justify-content:center;}
+  .modal-full .modal-sheet{border-radius:0;max-height:100vh;height:100vh;padding:0;display:flex;flex-direction:column;}
+  .td-head{position:sticky;top:0;z-index:5;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--card-edge);padding:16px 18px 14px;display:flex;align-items:flex-start;gap:12px;}
+  .td-head .td-titles{flex:1;min-width:0;}
+  .td-head h2{font-family:'Anton',sans-serif;font-weight:400;font-size:22px;line-height:1.02;text-transform:uppercase;color:var(--ink);}
+  .td-head .td-sub{font-size:12px;color:var(--muted);font-weight:600;margin-top:3px;}
+  .td-close{width:36px;height:36px;flex:none;border-radius:50%;border:1px solid var(--card-edge);background:var(--bg);display:grid;place-items:center;cursor:pointer;font-size:18px;color:var(--muted);line-height:1;}
+  .td-body{flex:1;overflow-y:auto;padding:16px 16px 120px;}
+  .td-group-h{font-size:12px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:var(--olive-deep);background:var(--olive-light);padding:8px 13px;border-radius:10px;margin:18px 0 10px;}
+  .td-group-h:first-child{margin-top:0;}
+
+  .ex-card{background:var(--card);border:1px solid var(--card-edge);border-radius:18px;overflow:hidden;margin-bottom:14px;box-shadow:0 2px 12px rgba(0,0,0,.05);}
+  .ex-top{display:flex;gap:13px;padding:14px;align-items:center;}
+  .ex-photo{width:62px;height:62px;flex:none;border-radius:13px;background:linear-gradient(135deg,#2a2540,#1a1730);display:grid;place-items:center;overflow:hidden;}
+  .ex-photo img{width:100%;height:100%;object-fit:cover;}
+  .ex-photo svg{width:22px;height:22px;stroke:rgba(255,255,255,.4);}
+  .ex-info{flex:1;min-width:0;}
+  .ex-info h4{font-size:15px;font-weight:800;color:var(--ink);line-height:1.15;}
+  .ex-info .ex-target{font-size:11.5px;color:var(--muted);font-weight:700;margin-top:3px;}
+  .ex-obs{display:flex;gap:8px;align-items:flex-start;padding:0 14px 12px;}
+  .ex-obs .ic{font-size:14px;flex:none;}
+  .ex-obs span{font-size:12px;color:var(--hazel-deep);font-weight:600;line-height:1.4;}
+
+  .ex-table{border-top:1px solid var(--card-edge);}
+  .set-row{display:grid;grid-template-columns:28px 1fr 1fr 1.2fr 40px;gap:8px;align-items:center;padding:9px 12px;border-bottom:1px solid var(--card-edge);}
+  .set-row:last-child{border-bottom:none;}
+  .set-row.head{padding:8px 12px;}
+  .set-row.head span{font-size:10px;font-weight:800;color:var(--muted2);letter-spacing:.06em;text-transform:uppercase;text-align:center;}
+  .set-row.head span:first-child{text-align:left;}
+  .set-row .snum{font-size:14px;font-weight:800;color:var(--muted);text-align:center;}
+  .set-inp{width:100%;text-align:center;font-family:'Manrope';font-size:16px;font-weight:800;color:var(--ink);background:var(--bg);border:1.5px solid var(--card-edge);border-radius:10px;padding:8px 4px;outline:none;transition:border-color .15s;-moz-appearance:textfield;}
+  .set-inp::-webkit-outer-spin-button,.set-inp::-webkit-inner-spin-button{-webkit-appearance:none;margin:0;}
+  .set-inp:focus{border-color:var(--olive-deep);background:#fff;}
+  .set-prev{font-size:13px;font-weight:700;color:var(--muted2);text-align:center;}
+  .set-prev b{color:var(--muted);}
+  .set-check{width:32px;height:32px;border-radius:9px;border:2px solid var(--card-edge);background:transparent;display:grid;place-items:center;cursor:pointer;color:transparent;font-size:15px;font-weight:900;transition:.18s;justify-self:center;}
+  .set-check:active{transform:scale(.88);}
+  .set-check.on{background:var(--olive);border-color:var(--olive-deep);color:#282828;}
+  .set-row.done .set-inp{border-color:var(--olive);background:var(--olive-light);}
+
+  .td-foot{position:absolute;bottom:0;left:0;right:0;padding:14px 16px calc(14px + env(safe-area-inset-bottom));background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-top:1px solid var(--card-edge);}
+  .td-finish{width:100%;font-family:'Manrope';font-size:15px;font-weight:800;color:#fff;background:var(--olive-deep);border:none;border-radius:16px;padding:16px;cursor:pointer;transition:.2s;}
+  .td-finish:active{opacity:.85;}
+  .td-finish.done{background:var(--ink);}
 </style>
 </head>
 <body>
@@ -218,6 +282,10 @@
       <div class="chip" onclick="openProfileEdit('gender')"><span id="chipGenderIcon">🧑</span> <span class="chip-val" id="chipGender">–</span> <span class="edit-hint">✏️</span></div>
     </div>
   </header>
+
+  <!-- MEUS TREINOS -->
+  <div class="sec-h reveal"><span class="dot"></span><h2>Meus treinos</h2></div>
+  <div class="wk-list reveal" id="wkList"></div>
 
   <!-- ACCORDION: Gasto energético -->
   <div class="acc-wrap reveal">
@@ -304,6 +372,23 @@ Gasto do dia = base + treino que voce marcou."><svg viewBox="0 0 24 24" fill="no
     <div id="profileModalBody"></div>
     <button class="modal-btn" onclick="saveProfileField()">Salvar</button>
     <button class="modal-btn modal-btn-sec" style="margin-top:8px;" onclick="closeModal('profileModal')">Cancelar</button>
+  </div>
+</div>
+
+<!-- ── MODAL: detalhe do treino ── -->
+<div class="modal-overlay modal-full" id="trainingModal">
+  <div class="modal-sheet" onclick="event.stopPropagation()">
+    <div class="td-head">
+      <div class="td-titles">
+        <h2 id="tdName">Treino</h2>
+        <div class="td-sub" id="tdSub"></div>
+      </div>
+      <button class="td-close" onclick="closeModal('trainingModal')">✕</button>
+    </div>
+    <div class="td-body" id="tdBody"></div>
+    <div class="td-foot">
+      <button class="td-finish" id="tdFinish" onclick="finishTraining()">✓ Finalizar treino e salvar séries</button>
+    </div>
   </div>
 </div>
 
@@ -804,8 +889,221 @@ Gasto do dia = base + treino que voce marcou."><svg viewBox="0 0 24 24" fill="no
     updateHeader(); // estado inicial
   })();
 
+  /* ── TREINOS ── */
+  // Fotos (preenchidas depois). ex: EX_PHOTOS['sup_maquina']='fotos/sup_maquina.jpg'
+  const WK_COVERS={};   // capa do treino:  WK_COVERS['superiores06']='...'
+  const EX_PHOTOS={};   // foto do exercício: EX_PHOTOS['sup_maquina']='...'
+
+  const TRAININGS=[
+    { id:'superiores06', name:'SUPERIORES COMPLETO 06', dur:'45–55 min', equip:'Barra, Banco, Halteres, Rack',
+      ex:[
+        {id:'sup_maquina',  name:'Supino Máquina', sets:3, kg:23,   reps:15, obs:'Se preferir, trocar pelo supino reto com a barra ou halteres'},
+        {id:'sup_incl_h',   name:'Supino Inclinado com Halteres', sets:3, kg:18, reps:12, perSide:true},
+        {id:'pux_aberta',   name:'Puxada pela Frente com Pegada Aberta', sets:4, kg:27, reps:12},
+        {id:'rem_curv_b',   name:'Remada Curvada com Barra', sets:3, kg:20.5, reps:15},
+        {id:'des_arnold',   name:'Desenvolvimento Arnold', sets:3, kg:9, reps:12, perSide:true},
+        {id:'tri_polia',    name:'Tríceps na Polia', sets:4, kg:16, reps:12},
+        {id:'rosca_cabo',   name:'Rosca Direta no Cabo', sets:4, kg:18, reps:12},
+      ]},
+    { id:'inferiores06', name:'INFERIORES COMPLETO E ABD 06', dur:'35–45 min', equip:'Barra, Rack',
+      ex:[
+        {id:'agach_smith',  name:'Agachamento Smith', sets:3, kg:9, reps:15},
+        {id:'leg_press',    name:'Leg Press 45°', sets:3, kg:45, reps:12},
+        {id:'terra_sumo',   name:'Levantamento Terra Sumô com Barra', sets:3, kg:9, reps:12},
+        {id:'cad_flexora',  name:'Cadeira Flexora', sets:3, kg:14, reps:15},
+        {id:'cad_extens',   name:'Cadeira Extensora', sets:3, kg:14, reps:15},
+        {id:'cad_adutora',  name:'Cadeira Adutora', sets:3, kg:9, reps:12},
+        {id:'panturrilha',  name:'Panturrilha Máquina', sets:2, kg:14, reps:20},
+        {id:'abd_reto',     name:'Abdominal Reto Curto', sets:2, isTime:true, time:30},
+      ]},
+    { id:'peitotri06', name:'PEITO / TRÍCEPS 06', dur:'35–45 min', equip:'Barra, Banco, Halteres',
+      ex:[
+        {id:'pt_sup_maq',   name:'Supino Máquina', sets:4, kg:80, reps:12},
+        {id:'pt_sup_incl',  name:'Supino Inclinado com Halteres', sets:3, kg:20, reps:12, perSide:true},
+        {id:'pt_sup_decl',  name:'Supino Declinado com Halteres', sets:3, kg:18, reps:12, perSide:true},
+        {id:'pt_cruci',     name:'Crucifixo Polia', sets:3, kg:30, reps:12},
+        {id:'pt_tri_corda', name:'Tríceps com Corda', sets:3, kg:30, reps:15},
+        {id:'pt_tri_testa', name:'Tríceps Testa com Barra', sets:3, kg:16, reps:15},
+        {id:'pt_tri_franc', name:'Tríceps Francês com Halteres', sets:3, kg:18, reps:12, perSide:true, obs:'Pode fazer sentado no banco'},
+      ]},
+    { id:'costas_super', name:'COSTAS SUPERSÉRIE', dur:'60 min', equip:'Barra, Halteres',
+      ex:[
+        {id:'cs_pux_aberta',  name:'Puxada pela Frente com Pegada Aberta', sets:4, kg:50, reps:12, group:'SUPERSET 1'},
+        {id:'cs_pux_supin',   name:'Puxada pela Frente com Pegada Supinada', sets:4, kg:40, reps:12, group:'SUPERSET 1'},
+        {id:'cs_rem_baixa',   name:'Remada Baixa na Polia', sets:4, kg:40, reps:12, group:'SUPERSET 2'},
+        {id:'cs_rem_curv_h',  name:'Remada Curvada com Halteres', sets:4, kg:20, reps:12, perSide:true, group:'SUPERSET 2'},
+        {id:'cs_rem_curv_b',  name:'Remada Curvada com Barra', sets:4, kg:20, reps:12, group:'SUPERSET 3'},
+        {id:'cs_cruci_inv',   name:'Crucifixo Inverso com Halteres', sets:4, kg:10, reps:12, perSide:true, group:'SUPERSET 3'},
+        {id:'cs_rem_corda',   name:'Remada com Corda na Polia Alta', sets:4, kg:20, reps:12, group:'SUPERSET 4'},
+        {id:'cs_rem_serrote', name:'Remada Serrote com Halter', sets:4, kg:22, reps:12, perSide:true, perSideLabel:'/lado', group:'SUPERSET 4'},
+      ]},
+  ];
+
+  const TLOG_KEY='hanna-treino-log-v1';
+  let tlog={};
+  function loadTlog(){ try{ const s=localStorage.getItem(TLOG_KEY); if(s) tlog=JSON.parse(s); }catch(e){ tlog={}; } }
+  function saveTlog(){ try{ localStorage.setItem(TLOG_KEY,JSON.stringify(tlog)); }catch(e){} }
+
+  const PH_SVG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>';
+  const PLAY_SVG='<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
+
+  function renderWkList(){
+    const c=document.getElementById('wkList'); if(!c)return;
+    c.innerHTML='';
+    TRAININGS.forEach(w=>{
+      const totalEx=w.ex.length;
+      const cover=WK_COVERS[w.id];
+      const card=document.createElement('div');
+      card.className='wk-card';
+      card.onclick=()=>openTraining(w.id);
+      card.innerHTML=`
+        <div class="wk-cover">
+          ${cover?`<img src="${cover}" alt="">`:`<div class="ph">${PH_SVG}<span>foto do treino</span></div>`}
+          <div class="dur-badge">⏱️ ${w.dur}</div>
+          <div class="play">${PLAY_SVG}</div>
+        </div>
+        <div class="wk-body">
+          <h3>${w.name}</h3>
+          <div class="wk-meta">
+            <span class="wk-tag"><b>${totalEx}</b> exercícios</span>
+            <span class="wk-tag">🏋️ ${w.equip}</span>
+          </div>
+        </div>`;
+      c.appendChild(card);
+    });
+  }
+
+  let _curTraining=null;
+  function openTraining(id){
+    const w=TRAININGS.find(t=>t.id===id); if(!w)return;
+    _curTraining=w;
+    document.getElementById('tdName').textContent=w.name;
+    document.getElementById('tdSub').textContent=`⏱️ ${w.dur} · 🏋️ ${w.equip}`;
+    renderTraining(w);
+    document.getElementById('tdBody').scrollTop=0;
+    const fin=document.getElementById('tdFinish');
+    fin.classList.remove('done'); fin.textContent='✓ Finalizar treino e salvar séries';
+    openModal('trainingModal');
+  }
+
+  // garante estrutura cur para um exercício
+  function exState(ex){
+    if(!tlog[ex.id]) tlog[ex.id]={cur:null,prev:null};
+    const st=tlog[ex.id];
+    if(!st.cur || st.cur.length!==ex.sets){
+      // inicializa a partir do prev (se existir) ou do alvo prescrito
+      st.cur=[];
+      for(let i=0;i<ex.sets;i++){
+        const pv=st.prev&&st.prev.sets&&st.prev.sets[i];
+        if(ex.isTime){
+          st.cur.push({time: pv? pv.time : ex.time, done:false});
+        } else {
+          st.cur.push({kg: pv? pv.kg : ex.kg, reps: pv? pv.reps : ex.reps, done:false});
+        }
+      }
+    }
+    return st;
+  }
+
+  function renderTraining(w){
+    const body=document.getElementById('tdBody');
+    body.innerHTML='';
+    let lastGroup=null;
+    w.ex.forEach(ex=>{
+      if(ex.group && ex.group!==lastGroup){
+        const gh=document.createElement('div');
+        gh.className='td-group-h';
+        gh.textContent='🔁 '+ex.group;
+        body.appendChild(gh);
+        lastGroup=ex.group;
+      }
+      const st=exState(ex);
+      const photo=EX_PHOTOS[ex.id];
+      const targetTxt=ex.isTime
+        ? `Alvo: ${ex.sets}× ${ex.time}s`
+        : `Alvo: ${ex.sets}× ${fmtKg(ex.kg)}${ex.perSide?' (cada)':''} · ${ex.reps} rep`;
+
+      const card=document.createElement('div');
+      card.className='ex-card';
+
+      let rows='';
+      // cabeçalho da tabela
+      if(ex.isTime){
+        rows+=`<div class="set-row head" style="grid-template-columns:28px 1fr 1.2fr 40px;">
+          <span>#</span><span>Tempo (s)</span><span>Anterior</span><span></span></div>`;
+      } else {
+        rows+=`<div class="set-row head">
+          <span>#</span><span>Kg${ex.perSide?' (cada)':''}</span><span>Rept</span><span>Anterior</span><span></span></div>`;
+      }
+      // linhas de série
+      for(let i=0;i<ex.sets;i++){
+        const cur=st.cur[i];
+        const pv=st.prev&&st.prev.sets&&st.prev.sets[i];
+        const prevTxt=pv ? (ex.isTime? `${pv.time}s` : `${fmtKg(pv.kg)}×${pv.reps}`) : '–';
+        if(ex.isTime){
+          rows+=`<div class="set-row${cur.done?' done':''}" style="grid-template-columns:28px 1fr 1.2fr 40px;" data-ex="${ex.id}" data-set="${i}">
+            <div class="snum">${i+1}</div>
+            <input class="set-inp" type="number" inputmode="numeric" value="${cur.time??''}" onchange="setVal('${ex.id}',${i},'time',this.value)">
+            <div class="set-prev">${prevTxt}</div>
+            <button class="set-check${cur.done?' on':''}" onclick="toggleSet('${ex.id}',${i},this)">✓</button>
+          </div>`;
+        } else {
+          rows+=`<div class="set-row${cur.done?' done':''}" data-ex="${ex.id}" data-set="${i}">
+            <div class="snum">${i+1}</div>
+            <input class="set-inp" type="number" inputmode="decimal" step="0.5" value="${cur.kg??''}" onchange="setVal('${ex.id}',${i},'kg',this.value)">
+            <input class="set-inp" type="number" inputmode="numeric" value="${cur.reps??''}" onchange="setVal('${ex.id}',${i},'reps',this.value)">
+            <div class="set-prev">${prevTxt}</div>
+            <button class="set-check${cur.done?' on':''}" onclick="toggleSet('${ex.id}',${i},this)">✓</button>
+          </div>`;
+        }
+      }
+
+      card.innerHTML=`
+        <div class="ex-top">
+          <div class="ex-photo" data-photo="${ex.id}">${photo?`<img src="${photo}" alt="">`:PH_SVG}</div>
+          <div class="ex-info"><h4>${ex.name}</h4><div class="ex-target">${targetTxt}</div></div>
+        </div>
+        ${ex.obs?`<div class="ex-obs"><span class="ic">💬</span><span>${ex.obs}</span></div>`:''}
+        <div class="ex-table">${rows}</div>`;
+      body.appendChild(card);
+    });
+  }
+
+  function fmtKg(n){ if(n==null)return '–'; return (Math.round(n*10)/10).toString().replace('.',','); }
+
+  function setVal(exId,i,field,val){
+    const st=tlog[exId]; if(!st||!st.cur||!st.cur[i])return;
+    const num=parseFloat((val+'').replace(',','.'));
+    st.cur[i][field]=isNaN(num)?null:num;
+    saveTlog();
+  }
+
+  function toggleSet(exId,i,btn){
+    const st=tlog[exId]; if(!st||!st.cur||!st.cur[i])return;
+    st.cur[i].done=!st.cur[i].done;
+    btn.classList.toggle('on',st.cur[i].done);
+    btn.closest('.set-row').classList.toggle('done',st.cur[i].done);
+    saveTlog();
+  }
+
+  function finishTraining(){
+    if(!_curTraining)return;
+    // snapshot: cur -> prev (com data de hoje), reseta os "done"
+    _curTraining.ex.forEach(ex=>{
+      const st=tlog[ex.id]; if(!st||!st.cur)return;
+      st.prev={ date:todayStr(), sets: st.cur.map(s=> ex.isTime?{time:s.time}:{kg:s.kg,reps:s.reps}) };
+      st.cur.forEach(s=>s.done=false);
+    });
+    saveTlog();
+    const fin=document.getElementById('tdFinish');
+    fin.classList.add('done'); fin.textContent='✓ Séries salvas! Bom treino 💪';
+    renderTraining(_curTraining);
+    setTimeout(()=>{ closeModal('trainingModal'); },900);
+  }
+
   /* init */
   loadProfile(); loadChecks(); buildAgenda(); recalc(); tmRender();
+  loadTlog(); renderWkList();
 </script>
 </body>
 </html>
