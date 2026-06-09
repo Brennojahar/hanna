@@ -1102,8 +1102,19 @@ Gasto do dia = base + treino que voce marcou."><svg viewBox="0 0 24 24" fill="no
   }
 
   /* init */
-  loadProfile(); loadChecks(); buildAgenda(); recalc(); tmRender();
-  loadTlog(); renderWkList();
+  function initApp(){
+    try{ loadProfile(); }catch(e){ console.error('profile',e); }
+    try{ loadChecks(); buildAgenda(); recalc(); }catch(e){ console.error('agenda',e); }
+    try{ tmRender(); }catch(e){ console.error('esteira',e); }
+    try{ loadTlog(); renderWkList(); }
+    catch(e){
+      console.error('treinos',e);
+      const c=document.getElementById('wkList');
+      if(c) c.innerHTML='<div style="padding:16px;background:#fff;border:1px solid var(--card-edge);border-radius:16px;color:var(--hazel-deep);font-size:13px;font-weight:600;">⚠️ Erro ao carregar treinos: '+e.message+'</div>';
+    }
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',initApp);
+  else initApp();
 </script>
 </body>
 </html>
