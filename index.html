@@ -265,6 +265,29 @@
   .td-finish{width:100%;font-family:'Manrope';font-size:15px;font-weight:800;color:#fff;background:var(--olive-deep);border:none;border-radius:16px;padding:16px;cursor:pointer;transition:.2s;}
   .td-finish:active{opacity:.85;}
   .td-finish.done{background:var(--ink);}
+
+  /* ── BOTTOM NAV ── */
+  body{padding-bottom:0;}
+  .wrap{padding-bottom:96px;}
+  .botnav{position:fixed;bottom:0;left:0;right:0;z-index:60;background:rgba(255,255,255,.94);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-top:1px solid var(--card-edge);display:flex;justify-content:space-around;align-items:stretch;padding:8px 6px calc(8px + env(safe-area-inset-bottom));box-shadow:0 -2px 20px rgba(0,0,0,.05);}
+  .botnav-item{flex:1;background:none;border:none;display:flex;flex-direction:column;align-items:center;gap:4px;padding:6px 4px;cursor:pointer;color:var(--muted2);transition:color .2s;font-family:'Manrope';}
+  .botnav-item svg{width:26px;height:26px;stroke:var(--muted2);fill:none;stroke-width:2;transition:stroke .2s,transform .15s;}
+  .botnav-item .bn-lab{font-size:11.5px;font-weight:700;letter-spacing:.01em;}
+  .botnav-item:active svg{transform:scale(.88);}
+  .botnav-item.active{color:var(--olive-deep);}
+  .botnav-item.active svg{stroke:var(--olive-deep);}
+
+  /* views */
+  .view[hidden]{display:none;}
+  .view-enter{animation:viewIn .35s cubic-bezier(.2,.7,.2,1);}
+  @keyframes viewIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
+
+  /* chat placeholder / progresso */
+  .placeholder-view{padding:50px 20px;text-align:center;}
+  .placeholder-view .pv-ic{font-size:54px;}
+  .placeholder-view h3{font-family:'Anton',sans-serif;font-weight:400;font-size:28px;text-transform:uppercase;color:var(--ink);margin-top:14px;letter-spacing:.01em;}
+  .placeholder-view p{color:var(--muted);font-size:14px;font-weight:600;margin-top:8px;line-height:1.5;}
+  .view-pad{padding-top:8px;}
 </style>
 </head>
 <body>
@@ -277,18 +300,16 @@
   </div>
   <div class="hero-spacer"></div>
 
+  <!-- ===== VIEW: INÍCIO ===== -->
+  <div id="view-inicio" class="view">
   <header class="hero reveal">
     <div class="chips">
       <div class="chip" onclick="openProfileEdit('age')">🎂 <b class="chip-val" id="chipAge">–</b> anos <span class="edit-hint">✏️</span></div>
       <div class="chip" onclick="openProfileEdit('height')">📏 <b class="chip-val" id="chipHeight">–</b> cm <span class="edit-hint">✏️</span></div>
-      <div class="chip chip-weight" onclick="openWeightModal()">⚖️ <b class="chip-val" id="chipWeight">–</b> kg <span class="edit-hint">📊</span></div>
+      <div class="chip chip-weight" onclick="goProgresso()">⚖️ <b class="chip-val" id="chipWeight">–</b> kg <span class="edit-hint">📊</span></div>
       <div class="chip" onclick="openProfileEdit('gender')"><span id="chipGenderIcon">🧑</span> <span class="chip-val" id="chipGender">–</span> <span class="edit-hint">✏️</span></div>
     </div>
   </header>
-
-  <!-- MEUS TREINOS -->
-  <div class="sec-h reveal"><span class="dot"></span><h2>Meus treinos</h2></div>
-  <div class="wk-list" id="wkList"></div>
 
   <!-- ACCORDION: Gasto energético -->
   <div class="acc-wrap reveal">
@@ -364,8 +385,67 @@ Gasto do dia = base + treino que voce marcou."><svg viewBox="0 0 24 24" fill="no
     <div class="disc">Valores são estimativas educativas baseadas no seu plano e na sua rotina informada.
     As queimas por treino são aproximações e variam com intensidade. Não substituem a avaliação da sua nutricionista.</div>
   </div>
+  </div><!-- /view-inicio -->
+
+  <!-- ===== VIEW: TREINO ===== -->
+  <div id="view-treino" class="view view-pad" hidden>
+    <div class="sec-h"><span class="dot"></span><h2>Meus treinos</h2></div>
+    <div class="wk-list" id="wkList"></div>
+  </div>
+
+  <!-- ===== VIEW: PROGRESSO ===== -->
+  <div id="view-progresso" class="view view-pad" hidden>
+    <div class="sec-h"><span class="dot"></span><h2>Evolução do peso</h2></div>
+    <div class="card" style="padding:18px;">
+      <div class="wh-entry-box" style="margin-bottom:18px;">
+        <div class="modal-label">Registrar peso de hoje</div>
+        <div class="row">
+          <div class="col">
+            <input class="modal-input" type="number" id="whInput" placeholder="Ex: 72.5" step="0.1" min="30" max="250" inputmode="decimal">
+          </div>
+          <button class="modal-btn" style="width:auto;padding:12px 18px;margin-top:0;" onclick="saveWeightEntry()">+ Salvar</button>
+        </div>
+      </div>
+      <div class="wh-stats" id="whStats" style="display:none;"></div>
+      <div class="wh-chart-wrap" id="whChartWrap" style="display:none;">
+        <div class="wh-chart-title">Evolução</div>
+        <svg id="whChart" width="100%" height="120" style="display:block;overflow:visible;"></svg>
+      </div>
+      <div class="modal-label" style="margin-top:4px;">Histórico</div>
+      <div class="wh-list" id="whList"></div>
+    </div>
+  </div>
+
+  <!-- ===== VIEW: CHAT ===== -->
+  <div id="view-chat" class="view" hidden>
+    <div class="placeholder-view">
+      <div class="pv-ic">💬</div>
+      <h3>Chat</h3>
+      <p>Em breve você vai poder conversar por aqui.</p>
+    </div>
+  </div>
 
 </div>
+
+<!-- ===== BOTTOM NAV ===== -->
+<nav class="botnav">
+  <button class="botnav-item active" id="nav-inicio" onclick="switchView('inicio')">
+    <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5 10v10h14V10"/></svg>
+    <span class="bn-lab">Início</span>
+  </button>
+  <button class="botnav-item" id="nav-treino" onclick="switchView('treino')">
+    <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 6.5l11 11"/><path d="M21 21l-1-1"/><path d="M3 3l1 1"/><rect x="1.5" y="8.5" width="4" height="7" rx="1" transform="rotate(-45 3.5 12)"/><rect x="18.5" y="8.5" width="4" height="7" rx="1" transform="rotate(-45 20.5 12)"/></svg>
+    <span class="bn-lab">Treino</span>
+  </button>
+  <button class="botnav-item" id="nav-chat" onclick="switchView('chat')">
+    <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.38 8.38 0 0 1 8.5-8.5 8.38 8.38 0 0 1 8.5 8.5z"/></svg>
+    <span class="bn-lab">Chat</span>
+  </button>
+  <button class="botnav-item" id="nav-progresso" onclick="switchView('progresso')">
+    <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M21 7v5h-5"/></svg>
+    <span class="bn-lab">Progresso</span>
+  </button>
+</nav>
 
 <!-- ── MODAL: editar perfil ── -->
 <div class="modal-overlay" id="profileModal" onclick="closeModal('profileModal')">
@@ -392,38 +472,6 @@ Gasto do dia = base + treino que voce marcou."><svg viewBox="0 0 24 24" fill="no
     <div class="td-foot">
       <button class="td-finish" id="tdFinish" onclick="finishTraining()">✓ Finalizar treino e salvar séries</button>
     </div>
-  </div>
-</div>
-
-<!-- ── MODAL: evolução do peso ── -->
-<div class="modal-overlay" id="weightModal" onclick="closeModal('weightModal')">
-  <div class="modal-sheet" onclick="event.stopPropagation()">
-    <div class="modal-handle"></div>
-    <div class="modal-title">⚖️ Evolução do Peso</div>
-
-    <!-- entrada -->
-    <div class="wh-entry-box">
-      <div class="modal-label">Registrar peso de hoje</div>
-      <div class="row">
-        <div class="col">
-          <input class="modal-input" type="number" id="whInput" placeholder="Ex: 72.5" step="0.1" min="30" max="250">
-        </div>
-        <button class="modal-btn" style="width:auto;padding:12px 18px;margin-top:0;" onclick="saveWeightEntry()">+ Salvar</button>
-      </div>
-    </div>
-
-    <!-- stats resumo -->
-    <div class="wh-stats" id="whStats" style="display:none;"></div>
-
-    <!-- chart -->
-    <div class="wh-chart-wrap" id="whChartWrap" style="display:none;">
-      <div class="wh-chart-title">Últimos 30 dias</div>
-      <svg id="whChart" width="100%" height="120" style="display:block;overflow:visible;"></svg>
-    </div>
-
-    <!-- lista -->
-    <div class="modal-label">Histórico</div>
-    <div class="wh-list" id="whList"></div>
   </div>
 </div>
 
@@ -523,10 +571,21 @@ Gasto do dia = base + treino que voce marcou."><svg viewBox="0 0 24 24" fill="no
     saveWeightHistory(); renderWeightModal();
   }
 
-  function openWeightModal(){
-    loadWeightHistory();
-    renderWeightModal();
-    openModal('weightModal');
+  function openWeightModal(){ goProgresso(); }
+  function goProgresso(){ switchView('progresso'); }
+
+  /* ── NAVEGAÇÃO POR ABAS ── */
+  const VIEWS=['inicio','treino','progresso','chat'];
+  function switchView(name){
+    VIEWS.forEach(v=>{
+      const el=document.getElementById('view-'+v);
+      const nav=document.getElementById('nav-'+v);
+      if(el){ if(v===name){ el.hidden=false; el.classList.remove('view-enter'); void el.offsetWidth; el.classList.add('view-enter'); } else { el.hidden=true; } }
+      if(nav) nav.classList.toggle('active', v===name);
+    });
+    if(name==='progresso'){ loadWeightHistory(); renderWeightModal(); }
+    if(name==='treino'){ renderWkList(); }
+    window.scrollTo({top:0,behavior:'auto'});
   }
 
   function renderWeightModal(){
