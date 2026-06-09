@@ -29,10 +29,10 @@
   .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1);}
   .reveal.in{opacity:1;transform:none;}
 
-  .hero-sticky{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(247,247,247,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--card-edge);padding:12px 18px 10px;display:flex;flex-direction:column;align-items:flex-start;max-width:100%;}
-  .hero-sticky h1{font-family:'Anton',sans-serif;font-weight:400;font-size:28px;line-height:1;letter-spacing:.01em;text-transform:uppercase;background:linear-gradient(120deg,#282828 10%,var(--olive-deep) 60%,#8fa040 100%);-webkit-background-clip:text;background-clip:text;color:transparent;}
-  .hero-sticky .sub{color:var(--muted);font-weight:600;font-size:12px;margin-top:1px;}
-  .hero-spacer{height:72px;} /* empurra o conteúdo para baixo do header fixo */
+  .hero-sticky{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(247,247,247,.93);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid transparent;padding:22px 18px 16px;display:flex;flex-direction:column;align-items:flex-start;will-change:padding;}
+  .hero-sticky h1{font-family:'Anton',sans-serif;font-weight:400;font-size:58px;line-height:.95;letter-spacing:.01em;text-transform:uppercase;background:linear-gradient(120deg,#282828 10%,var(--olive-deep) 60%,#8fa040 100%);-webkit-background-clip:text;background-clip:text;color:transparent;will-change:font-size;}
+  .hero-sticky .sub{color:var(--muted);font-weight:600;font-size:15px;margin-top:4px;will-change:font-size,opacity;}
+  .hero-spacer{height:110px;}
   .hero{padding:18px 0 14px;position:relative;}
   .eyebrow{display:none;}
   .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px;}
@@ -772,6 +772,37 @@ Gasto do dia = base + treino que voce marcou."><svg viewBox="0 0 24 24" fill="no
     header.classList.toggle('open',!isOpen); body.classList.toggle('open',!isOpen);
     if(!isOpen){ setTimeout(()=>{ body.querySelectorAll('.fill,.pfill').forEach(f=>{f.style.width=f.dataset.pct+'%';}); body.querySelectorAll('[data-count]').forEach(el=>{if(!el.dataset.done)countUp(el);}); },80); }
   }
+
+  /* ── SHRINKING HEADER ── */
+  (function(){
+    const sticky  = document.querySelector('.hero-sticky');
+    const h1      = sticky.querySelector('h1');
+    const sub     = sticky.querySelector('.sub');
+    const spacer  = document.querySelector('.hero-spacer');
+
+    const H1_BIG=58, H1_SM=24;
+    const SUB_BIG=15, SUB_SM=11;
+    const PAD_TOP_BIG=22, PAD_TOP_SM=10;
+    const PAD_BOT_BIG=16, PAD_BOT_SM=8;
+    const THRESH=90; // px de scroll para completar a animação
+
+    function lerp(a,b,t){ return a+(b-a)*t; }
+
+    function updateHeader(){
+      const t=Math.min(1, window.scrollY/THRESH);
+      h1.style.fontSize       = lerp(H1_BIG,  H1_SM,  t)+'px';
+      sub.style.fontSize      = lerp(SUB_BIG, SUB_SM, t)+'px';
+      sub.style.opacity       = lerp(1, .7, t);
+      sticky.style.paddingTop    = lerp(PAD_TOP_BIG, PAD_TOP_SM, t)+'px';
+      sticky.style.paddingBottom = lerp(PAD_BOT_BIG, PAD_BOT_SM, t)+'px';
+      sticky.style.borderBottomColor = t>0.4?'var(--card-edge)':'transparent';
+      // ajusta o spacer para não sobrepor o conteúdo
+      spacer.style.height = sticky.offsetHeight+'px';
+    }
+
+    window.addEventListener('scroll', updateHeader, {passive:true});
+    updateHeader(); // estado inicial
+  })();
 
   /* init */
   loadProfile(); loadChecks(); buildAgenda(); recalc(); tmRender();
