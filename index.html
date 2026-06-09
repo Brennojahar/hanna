@@ -288,6 +288,63 @@
   .placeholder-view h3{font-family:'Anton',sans-serif;font-weight:400;font-size:28px;text-transform:uppercase;color:var(--ink);margin-top:14px;letter-spacing:.01em;}
   .placeholder-view p{color:var(--muted);font-size:14px;font-weight:600;margin-top:8px;line-height:1.5;}
   .view-pad{padding-top:8px;}
+
+  /* ── PROGRESSO ── */
+  .pg-prof{display:flex;align-items:center;gap:14px;padding:18px 2px 6px;}
+  .pg-avatar{width:58px;height:58px;flex:none;border-radius:50%;border:2.5px solid var(--olive-deep);display:grid;place-items:center;color:var(--olive-deep);}
+  .pg-avatar svg{width:30px;height:30px;stroke:var(--olive-deep);fill:none;stroke-width:2;}
+  .pg-prof .pg-name{font-size:21px;font-weight:800;color:var(--ink);line-height:1.1;}
+  .pg-prof .pg-mail{font-size:13px;color:var(--muted);font-weight:600;margin-top:2px;}
+  .pg-stats{display:flex;align-items:stretch;margin:18px 2px;}
+  .pg-stat{flex:1;text-align:left;padding:0 4px;position:relative;}
+  .pg-stat + .pg-stat{border-left:1px solid var(--card-edge);padding-left:16px;}
+  .pg-stat .v{font-family:'Anton',sans-serif;font-size:36px;color:var(--ink);line-height:1;}
+  .pg-stat .l{font-size:11.5px;font-weight:700;color:var(--muted);letter-spacing:.02em;margin-top:7px;text-transform:uppercase;line-height:1.25;}
+
+  /* calendário jornada */
+  .cal-card{padding:18px 14px;}
+  .cal-title{text-align:center;font-size:15px;font-weight:800;color:var(--ink);letter-spacing:.05em;text-transform:uppercase;padding-bottom:12px;border-bottom:1px solid var(--card-edge);margin-bottom:12px;}
+  .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px 2px;}
+  .cal-dow{text-align:center;font-size:10px;font-weight:800;color:var(--muted2);letter-spacing:.02em;padding-bottom:6px;}
+  .cal-cell{aspect-ratio:1;display:grid;place-items:center;}
+  .cal-day{width:88%;max-width:42px;aspect-ratio:1;border-radius:50%;border:1.5px solid var(--card-edge);display:grid;place-items:center;font-size:13px;font-weight:700;color:var(--muted);}
+  .cal-day.empty{border-color:transparent;}
+  .cal-day.done{background:var(--olive-deep);border-color:var(--olive-deep);color:#fff;box-shadow:0 2px 8px rgba(168,184,94,.4);}
+  .cal-day.today{border-color:var(--olive-deep);border-width:2px;color:var(--olive-deep);}
+  .cal-day.today.done{color:#fff;}
+
+  /* acompanhamento de peso */
+  .wcard{padding:20px 18px;}
+  .wc-top{display:flex;justify-content:space-between;gap:14px;}
+  .wc-lab{font-size:12px;font-weight:700;color:var(--muted);letter-spacing:.04em;text-transform:uppercase;}
+  .wc-big{font-family:'Anton',sans-serif;font-size:42px;color:var(--ink);line-height:1;margin-top:4px;}
+  .wc-big.loss{color:var(--olive-deep);}
+  .wc-big.gain{color:var(--hazel-deep);}
+  .wc-toggle{margin-top:14px;background:none;border:none;font-family:'Manrope';font-size:12px;font-weight:700;color:var(--muted);letter-spacing:.04em;text-transform:uppercase;cursor:pointer;display:inline-flex;align-items:center;gap:5px;padding:0;}
+  .wc-right{display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:120px;}
+  .wc-row{display:flex;justify-content:space-between;gap:14px;width:100%;font-size:13px;}
+  .wc-row span{color:var(--muted);font-weight:600;}
+  .wc-row b{color:var(--ink);font-weight:800;}
+  .wc-update{margin-top:10px;width:100%;font-family:'Manrope';font-size:12px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--ink);background:transparent;border:1.5px solid var(--ink);border-radius:12px;padding:12px 10px;cursor:pointer;transition:.2s;}
+  .wc-update:active{background:var(--ink);color:#fff;}
+  #whHist[hidden]{display:none;}
+
+  /* treinos concluídos */
+  .done-head{display:flex;justify-content:space-between;align-items:center;margin:30px 2px 12px;}
+  .done-head h2{font-size:13px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);}
+  .done-head .see-all{font-size:12px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--olive-deep);cursor:pointer;}
+  .done-list{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--card-edge);border-radius:18px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.05);}
+  .done-row{display:flex;align-items:center;gap:0;border-bottom:1px solid var(--card-edge);}
+  .done-row:last-child{border-bottom:none;}
+  .done-thumb{width:72px;height:64px;flex:none;background:linear-gradient(135deg,#2a2540,#1a1730);display:grid;place-items:center;overflow:hidden;}
+  .done-thumb img{width:100%;height:100%;object-fit:cover;}
+  .done-thumb svg{width:24px;height:24px;stroke:rgba(255,255,255,.5);fill:none;stroke-width:2;}
+  .done-thumb.cardio{background:var(--olive-light);}
+  .done-thumb.cardio svg{stroke:var(--olive-deep);}
+  .done-info{flex:1;min-width:0;padding:12px 14px;}
+  .done-info .dn{font-size:15px;font-weight:700;color:var(--ink);line-height:1.2;}
+  .done-info .dt{font-size:12.5px;color:var(--muted);font-weight:600;margin-top:3px;}
+  .done-empty{padding:26px 18px;text-align:center;color:var(--muted2);font-size:13px;font-weight:600;}
 </style>
 </head>
 <body>
@@ -394,26 +451,55 @@ Gasto do dia = base + treino que voce marcou."><svg viewBox="0 0 24 24" fill="no
   </div>
 
   <!-- ===== VIEW: PROGRESSO ===== -->
-  <div id="view-progresso" class="view view-pad" hidden>
-    <div class="sec-h"><span class="dot"></span><h2>Evolução do peso</h2></div>
-    <div class="card" style="padding:18px;">
-      <div class="wh-entry-box" style="margin-bottom:18px;">
-        <div class="modal-label">Registrar peso de hoje</div>
-        <div class="row">
-          <div class="col">
-            <input class="modal-input" type="number" id="whInput" placeholder="Ex: 72.5" step="0.1" min="30" max="250" inputmode="decimal">
-          </div>
-          <button class="modal-btn" style="width:auto;padding:12px 18px;margin-top:0;" onclick="saveWeightEntry()">+ Salvar</button>
+  <div id="view-progresso" class="view" hidden>
+
+    <!-- perfil + stats -->
+    <div class="pg-prof">
+      <div class="pg-avatar"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg></div>
+      <div><div class="pg-name">Hanna</div><div class="pg-mail">Treino para ganho do corpinho 💪</div></div>
+    </div>
+    <div class="pg-stats">
+      <div class="pg-stat"><div class="v" id="pgTreinos">0</div><div class="l">Treinos<br>concluídos</div></div>
+      <div class="pg-stat"><div class="v" id="pgMin">0</div><div class="l">Minutos<br>exercitados</div></div>
+      <div class="pg-stat"><div class="v" id="pgKcal">0</div><div class="l">Calorias<br>queimadas</div></div>
+    </div>
+
+    <!-- minha jornada (calendário) -->
+    <div class="sec-h"><span class="dot"></span><h2>Minha jornada</h2></div>
+    <div class="card cal-card">
+      <div class="cal-title" id="calTitle">Mês</div>
+      <div class="cal-grid" id="calGrid"></div>
+    </div>
+
+    <!-- acompanhamento de peso -->
+    <div class="sec-h"><span class="dot"></span><h2>Acompanhamento de peso</h2></div>
+    <div class="card wcard">
+      <div class="wc-top">
+        <div style="flex:1;">
+          <div class="wc-lab" id="wcLossLab">Variação</div>
+          <div class="wc-big" id="wcBig">–</div>
+          <button class="wc-toggle" id="wcToggleBtn" onclick="toggleWHist()">Mostrar histórico ▾</button>
+        </div>
+        <div class="wc-right">
+          <div class="wc-row"><span>Inicial</span><b id="wcInit">–</b></div>
+          <div class="wc-row"><span>Atual</span><b id="wcCur">–</b></div>
+          <button class="wc-update" onclick="openWeightEntry()">Atualizar peso</button>
         </div>
       </div>
-      <div class="wh-stats" id="whStats" style="display:none;"></div>
-      <div class="wh-chart-wrap" id="whChartWrap" style="display:none;">
-        <div class="wh-chart-title">Evolução</div>
-        <svg id="whChart" width="100%" height="120" style="display:block;overflow:visible;"></svg>
+      <div id="whHist" hidden>
+        <div class="wh-chart-wrap" id="whChartWrap" style="margin-top:18px;">
+          <div class="wh-chart-title">Evolução</div>
+          <svg id="whChart" width="100%" height="120" style="display:block;overflow:visible;"></svg>
+        </div>
+        <div class="wh-list" id="whList"></div>
       </div>
-      <div class="modal-label" style="margin-top:4px;">Histórico</div>
-      <div class="wh-list" id="whList"></div>
     </div>
+
+    <!-- treinos concluídos -->
+    <div class="done-head">
+      <h2>Treinos concluídos</h2>
+    </div>
+    <div class="done-list" id="doneList"></div>
   </div>
 
   <!-- ===== VIEW: CHAT ===== -->
@@ -455,6 +541,18 @@ Gasto do dia = base + treino que voce marcou."><svg viewBox="0 0 24 24" fill="no
     <div id="profileModalBody"></div>
     <button class="modal-btn" onclick="saveProfileField()">Salvar</button>
     <button class="modal-btn modal-btn-sec" style="margin-top:8px;" onclick="closeModal('profileModal')">Cancelar</button>
+  </div>
+</div>
+
+<!-- ── MODAL: atualizar peso ── -->
+<div class="modal-overlay" id="weightEntryModal" onclick="closeModal('weightEntryModal')">
+  <div class="modal-sheet" onclick="event.stopPropagation()">
+    <div class="modal-handle"></div>
+    <div class="modal-title">⚖️ Registrar peso de hoje</div>
+    <div class="modal-label">Peso (kg)</div>
+    <input class="modal-input" type="number" id="whInput" placeholder="Ex: 72.5" step="0.1" min="30" max="250" inputmode="decimal">
+    <button class="modal-btn" onclick="saveWeightEntry()">Salvar</button>
+    <button class="modal-btn modal-btn-sec" style="margin-top:8px;" onclick="closeModal('weightEntryModal')">Cancelar</button>
   </div>
 </div>
 
@@ -563,12 +661,31 @@ Gasto do dia = base + treino que voce marcou."><svg viewBox="0 0 24 24" fill="no
     profile.weight=v;
     saveProfile(); renderProfileChips();
     inp.value='';
-    renderWeightModal();
+    closeModal('weightEntryModal');
+    renderProgresso();
+  }
+
+  function openWeightEntry(){
+    const inp=document.getElementById('whInput');
+    if(inp){ inp.value = profile.weight!=null? profile.weight : ''; }
+    openModal('weightEntryModal');
+    setTimeout(()=>{ if(inp){inp.focus();inp.select();} },300);
+  }
+
+  let _whistOpen=false;
+  function toggleWHist(){
+    _whistOpen=!_whistOpen;
+    const h=document.getElementById('whHist');
+    const b=document.getElementById('wcToggleBtn');
+    if(h) h.hidden=!_whistOpen;
+    if(b) b.textContent=_whistOpen?'Esconder histórico ▴':'Mostrar histórico ▾';
+    if(_whistOpen) renderWeightHist();
   }
 
   function deleteWeightEntry(date){
     weightHistory=weightHistory.filter(e=>e.date!==date);
-    saveWeightHistory(); renderWeightModal();
+    saveWeightHistory(); renderProgresso();
+    if(_whistOpen) renderWeightHist();
   }
 
   function openWeightModal(){ goProgresso(); }
@@ -583,40 +700,45 @@ Gasto do dia = base + treino que voce marcou."><svg viewBox="0 0 24 24" fill="no
       if(el){ if(v===name){ el.hidden=false; el.classList.remove('view-enter'); void el.offsetWidth; el.classList.add('view-enter'); } else { el.hidden=true; } }
       if(nav) nav.classList.toggle('active', v===name);
     });
-    if(name==='progresso'){ loadWeightHistory(); renderWeightModal(); }
+    if(name==='progresso'){ renderProgresso(); }
     if(name==='treino'){ renderWkList(); }
     window.scrollTo({top:0,behavior:'auto'});
   }
 
-  function renderWeightModal(){
-    const list=document.getElementById('whList');
-    const statsEl=document.getElementById('whStats');
-    const chartWrap=document.getElementById('whChartWrap');
-
+  // card resumo (perda de peso, inicial, atual)
+  function renderWeightCard(){
+    const big=document.getElementById('wcBig');
+    const lab=document.getElementById('wcLossLab');
+    const init=document.getElementById('wcInit');
+    const cur=document.getElementById('wcCur');
+    if(!big)return;
     if(weightHistory.length===0){
-      list.innerHTML='<div class="wh-empty">Nenhum registro ainda.<br>Registre seu peso acima! 📝</div>';
-      statsEl.style.display='none'; chartWrap.style.display='none'; return;
+      big.textContent='–'; big.className='wc-big';
+      lab.textContent='Variação';
+      init.textContent='–'; cur.textContent='–';
+      return;
     }
-
-    // stats
-    const vals=weightHistory.map(e=>e.weight);
     const first=weightHistory[weightHistory.length-1].weight;
     const last=weightHistory[0].weight;
-    const diff=Math.round((last-first)*10)/10;
-    const min=Math.min(...vals), max=Math.max(...vals);
-    const sign=diff>0?'+':'';
-    statsEl.style.display='flex';
-    statsEl.innerHTML=`
-      <div class="wh-stat"><div class="wsv">${last.toFixed(1)}</div><div class="wsl">Atual (kg)</div></div>
-      <div class="wh-stat"><div class="wsv" style="color:${diff<=0?'var(--olive-deep)':'var(--hazel-deep)'}">${sign}${diff.toFixed(1)}</div><div class="wsl">Variação total</div></div>
-      <div class="wh-stat"><div class="wsv">${weightHistory.length}</div><div class="wsl">Registros</div></div>`;
+    const diff=Math.round((last-first)*10)/10; // negativo = perdeu
+    init.textContent=first.toFixed(1).replace('.',',')+'kg';
+    cur.textContent=last.toFixed(1).replace('.',',')+'kg';
+    if(diff<0){ lab.textContent='Perda de peso'; big.className='wc-big loss'; big.textContent=Math.abs(diff).toFixed(1).replace('.',',')+'kg'; }
+    else if(diff>0){ lab.textContent='Ganho de peso'; big.className='wc-big gain'; big.textContent=diff.toFixed(1).replace('.',',')+'kg'; }
+    else { lab.textContent='Variação'; big.className='wc-big'; big.textContent='0kg'; }
+  }
 
-    // chart (últimos 14 registros, ordem cronológica)
-    chartWrap.style.display='block';
-    const chartData=[...weightHistory].reverse().slice(-14);
-    drawWeightChart(chartData);
-
-    // lista
+  // gráfico + lista (dentro do histórico)
+  function renderWeightHist(){
+    const list=document.getElementById('whList');
+    const chartWrap=document.getElementById('whChartWrap');
+    if(!list)return;
+    if(weightHistory.length===0){
+      list.innerHTML='<div class="wh-empty">Nenhum registro ainda.<br>Toque em “Atualizar peso” 📝</div>';
+      if(chartWrap) chartWrap.style.display='none'; return;
+    }
+    if(chartWrap) chartWrap.style.display=weightHistory.length>=2?'block':'none';
+    if(weightHistory.length>=2) drawWeightChart([...weightHistory].reverse().slice(-14));
     list.innerHTML='';
     weightHistory.forEach((e,i)=>{
       const prev=weightHistory[i+1];
@@ -1157,10 +1279,97 @@ Gasto do dia = base + treino que voce marcou."><svg viewBox="0 0 24 24" fill="no
       st.cur.forEach(s=>s.done=false);
     });
     saveTlog();
+    logSession(_curTraining);
     const fin=document.getElementById('tdFinish');
     fin.classList.add('done'); fin.textContent='✓ Séries salvas! Bom treino 💪';
     renderTraining(_curTraining);
     setTimeout(()=>{ closeModal('trainingModal'); },900);
+  }
+
+  /* ── SESSÕES CONCLUÍDAS ── */
+  const SESS_KEY='hanna-sessions-v1';
+  let sessions=[];
+  function loadSessions(){ try{ const s=localStorage.getItem(SESS_KEY); if(s) sessions=JSON.parse(s); }catch(e){ sessions=[]; } }
+  function saveSessions(){ try{ localStorage.setItem(SESS_KEY,JSON.stringify(sessions)); }catch(e){} }
+
+  function durMid(dur){ // "45–55 min" -> 50 ; "60 min" -> 60
+    const nums=(dur.match(/\d+/g)||[]).map(Number);
+    if(!nums.length)return 40;
+    return Math.round(nums.reduce((a,b)=>a+b,0)/nums.length);
+  }
+  function logSession(w){
+    const mins=durMid(w.dur);
+    const kcal=Math.round(mins*7); // estimativa educativa p/ musculação
+    sessions.push({ wid:w.id, name:w.name, date:todayStr(), ts:Date.now(), mins, kcal });
+    saveSessions();
+  }
+
+  const MONTHS=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+  const MON_ABBR=['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
+  const DOW=['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+
+  function renderProgresso(){
+    loadSessions(); loadWeightHistory();
+    renderStats(); renderCalendar(); renderWeightCard(); renderCompleted();
+    if(_whistOpen) renderWeightHist();
+  }
+
+  function renderStats(){
+    const n=sessions.length;
+    const mins=sessions.reduce((a,s)=>a+(s.mins||0),0);
+    const kcal=sessions.reduce((a,s)=>a+(s.kcal||0),0);
+    const t=document.getElementById('pgTreinos'); if(t) t.textContent=n;
+    const m=document.getElementById('pgMin'); if(m) m.textContent=mins;
+    const k=document.getElementById('pgKcal'); if(k) k.textContent=kcal.toLocaleString('pt-BR');
+  }
+
+  function renderCalendar(){
+    const grid=document.getElementById('calGrid'); const title=document.getElementById('calTitle');
+    if(!grid)return;
+    const now=new Date();
+    const year=now.getFullYear(), month=now.getMonth();
+    title.textContent=MONTHS[month]+' '+year;
+    const daysWithSession=new Set(sessions.filter(s=>{const d=s.date.split('-');return +d[0]===year&&(+d[1]-1)===month;}).map(s=>+s.date.split('-')[2]));
+    const firstDow=new Date(year,month,1).getDay();
+    const daysInMonth=new Date(year,month+1,0).getDate();
+    const todayD=now.getDate();
+    let html='';
+    DOW.forEach(d=>html+=`<div class="cal-dow">${d.toUpperCase()}.</div>`);
+    for(let i=0;i<firstDow;i++) html+=`<div class="cal-cell"></div>`;
+    for(let d=1;d<=daysInMonth;d++){
+      const done=daysWithSession.has(d);
+      const isToday=(d===todayD);
+      html+=`<div class="cal-cell"><div class="cal-day${done?' done':''}${isToday?' today':''}">${d}</div></div>`;
+    }
+    grid.innerHTML=html;
+  }
+
+  function fmtSessionTime(ts){
+    const d=new Date(ts);
+    let h=d.getHours(); const min=String(d.getMinutes()).padStart(2,'0');
+    const ampm=h>=12?'PM':'AM'; h=h%12; if(h===0)h=12;
+    return `${d.getDate()} de ${MON_ABBR[d.getMonth()]}., ${h}:${min} ${ampm}`;
+  }
+
+  const DUMBBELL_SVG='<svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 6.5l11 11"/><rect x="1" y="8.5" width="4" height="7" rx="1" transform="rotate(-45 3 12)"/><rect x="19" y="8.5" width="4" height="7" rx="1" transform="rotate(-45 21 12)"/></svg>';
+
+  function renderCompleted(){
+    const c=document.getElementById('doneList'); if(!c)return;
+    if(sessions.length===0){
+      c.innerHTML='<div class="done-empty">Nenhum treino concluído ainda.<br>Finalize um treino para aparecer aqui 💪</div>';
+      return;
+    }
+    const ordered=[...sessions].sort((a,b)=>b.ts-a.ts);
+    c.innerHTML='';
+    ordered.forEach(s=>{
+      const cover=WK_COVERS[s.wid];
+      const row=document.createElement('div');
+      row.className='done-row';
+      row.innerHTML=`
+        <div class="done-thumb">${cover?`<img src="${cover}" alt="">`:DUMBBELL_SVG}</div>
+        <div class="done-info"><div class="dn">${s.name}</div><div class="dt">${fmtSessionTime(s.ts)}</div></div>`;
+      c.appendChild(row);
+    });
   }
 
   /* init */
