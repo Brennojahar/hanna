@@ -520,16 +520,27 @@ Gasto do dia = base + treino que voce marcou."><svg viewBox="0 0 24 24" fill="no
     bike:    {icon:'🚴', name:'Bike na rua',          detail:'10 km',      kcal:300},
     esteira: {icon:'🏃', name:'Esteira protocolo',    detail:'30 min · intervalado', kcal:380},
   };
-  const TM_PHASES=[
-    {start:0,  end:4,  name:'Aquecimento',      inc:4,  vel:4.5, tip:'Ativa glúteos e core, prepara a frequência cardíaca.', color:'#a8b85e', bg:'#f4f8e6'},
-    {start:4,  end:9,  name:'Subida progressiva',inc:8,  vel:5.0, tip:'Já entra na zona de queima, respiração acelera mas controlada.', color:'#8a9e44', bg:'#eef4d8'},
-    {start:9,  end:13, name:'Power walk forte',  inc:6,  vel:6.0, tip:'Ritmo rápido em terreno mais baixo. Aqui o coração trabalha de verdade.', color:'#CBD77E', bg:'#f8fced'},
-    {start:13, end:18, name:'Montanha',          inc:12, vel:4.5, tip:'Bloco mais pesado: pernas, glúteos e abdômen no limite, sem impacto.', color:'#c4995a', bg:'#faf3e8'},
-    {start:18, end:22, name:'Recuperação ativa', inc:7,  vel:5.2, tip:'Baixa a inclinação mas mantém o ritmo — gasto calórico segue alto.', color:'#a8b85e', bg:'#f4f8e6'},
-    {start:22, end:27, name:'Pico final',        inc:13, vel:4.7, tip:'Último esforço forte. É onde mais se queima.', color:'#b07030', bg:'#fdf0e0'},
-    {start:27, end:30, name:'Desaceleração',     inc:4,  vel:4.0, tip:'Reduz aos poucos para a frequência voltar ao normal.', color:'#888888', bg:'#f5f5f5'},
+  const TM_PAUSE=10; // segundos de pausa entre etapas
+  const TM_PHASES_DEF=[
+    {name:'Aquecimento',       dur:4*60, inc:4,  vel:4.5, tip:'Ativa glúteos e core, prepara a frequência cardíaca.',                        color:'#a8b85e', bg:'#f4f8e6'},
+    {name:'Subida progressiva',dur:5*60, inc:8,  vel:5.0, tip:'Já entra na zona de queima, respiração acelera mas controlada.',              color:'#8a9e44', bg:'#eef4d8'},
+    {name:'Power walk forte',  dur:4*60, inc:6,  vel:6.0, tip:'Ritmo rápido em terreno mais baixo. Aqui o coração trabalha de verdade.',     color:'#CBD77E', bg:'#f8fced'},
+    {name:'Montanha',          dur:5*60, inc:12, vel:4.5, tip:'Bloco mais pesado: pernas, glúteos e abdômen no limite, sem impacto.',        color:'#c4995a', bg:'#faf3e8'},
+    {name:'Recuperação ativa', dur:4*60, inc:7,  vel:5.2, tip:'Baixa a inclinação mas mantém o ritmo — gasto calórico segue alto.',         color:'#a8b85e', bg:'#f4f8e6'},
+    {name:'Pico final',        dur:5*60, inc:13, vel:4.7, tip:'Último esforço forte. É onde mais se queima.',                               color:'#b07030', bg:'#fdf0e0'},
+    {name:'Desaceleração',     dur:3*60, inc:4,  vel:4.0, tip:'Reduz aos poucos para a frequência voltar ao normal.',                       color:'#888888', bg:'#f5f5f5'},
   ];
-  const TM_TOTAL=30*60;
+  // Calcula offsets reais (fase + pausa de 10s entre cada etapa)
+  const TM_PHASES=[];
+  let _off=0;
+  TM_PHASES_DEF.forEach((p,i)=>{
+    const s=_off, e=_off+p.dur;
+    const te=(i<TM_PHASES_DEF.length-1)?e+TM_PAUSE:e; // fim da pausa (se não for a última)
+    TM_PHASES.push({...p, startSec:s, endSec:e, transEndSec:te});
+    _off=te;
+  });
+  const TM_TOTAL=_off; // total real incluindo pausas
+
   let tmInterval=null, tmElapsed=0, tmRunning=false;
   let tmStartWallClock=null, tmBaseElapsed=0;
   let wakeLock=null;
@@ -552,30 +563,39 @@ Gasto do dia = base + treino que voce marcou."><svg viewBox="0 0 24 24" fill="no
     if(document.visibilityState==='visible'&&tmRunning){ await tmRequestWakeLock(); }
   });
 
-  function tmPhaseAt(sec){ const min=sec/60; return TM_PHASES.findIndex(p=>min>=p.start&&min<p.end); }
   function tmFmtTime(sec){ const m=Math.floor(sec/60),s=sec%60; return String(m).padStart(2,'0')+':'+String(s).padStart(2,'0'); }
+
+  // Retorna o estado atual: {type:'phase'|'pause'|'done', phaseIdx, pauseLeft}
+  function tmStateAt(sec){
+    for(let i=0;i<TM_PHASES.length;i++){
+      const p=TM_PHASES[i];
+      if(sec<p.endSec) return {type:'phase', phaseIdx:i};
+      if(sec<p.transEndSec) return {type:'pause', phaseIdx:i, pauseLeft:Math.ceil(p.transEndSec-sec), nextIdx:i+1};
+    }
+    return {type:'done'};
+  }
 
   function tmRender(){
     const started=tmRunning||tmElapsed>0;
-    const idx=started?tmPhaseAt(tmElapsed):-1;
+    const state=started?tmStateAt(tmElapsed):{type:'idle'};
     const c=document.getElementById('tmPhases'); if(!c)return;
     c.innerHTML='';
+
     TM_PHASES.forEach((p,i)=>{
-      const active=(i===idx);
-      const done=tmElapsed>0&&(tmElapsed/60)>=p.end;
-      const dur=p.end-p.start;
-      const secLeft=Math.max(0,p.end*60-tmElapsed);
-      const phasePct=active?Math.min(100,((tmElapsed-p.start*60)/(dur*60))*100):0;
+      const active=(state.type==='phase'&&state.phaseIdx===i);
+      const inPauseAfter=(state.type==='pause'&&state.phaseIdx===i);
+      const done=started&&tmElapsed>=p.endSec&&!inPauseAfter&&!active;
+      const dur=Math.round(p.dur/60);
+      const secLeft=Math.max(0,p.endSec-tmElapsed);
+      const phasePct=active?Math.min(100,((tmElapsed-p.startSec)/p.dur)*100):done?100:0;
 
       const div=document.createElement('div');
-      div.style.cssText=`border-radius:14px;margin-bottom:6px;border:1px solid ${active?p.color:'var(--card-edge)'};background:${active?p.bg:'transparent'};transition:.3s;overflow:hidden;`;
+      div.style.cssText=`border-radius:14px;margin-bottom:0;border:1px solid ${active?p.color:'var(--card-edge)'};background:${active?p.bg:'transparent'};transition:.3s;overflow:hidden;`;
       if(active) div.style.boxShadow=`0 2px 16px ${p.color}44`;
 
-      // linha principal
       const row=`<div style="display:flex;gap:12px;padding:12px 10px;">
         <div style="min-width:36px;text-align:center;padding-top:2px;">
-          <div style="font-size:10px;font-weight:800;color:${done?'var(--muted2)':active?p.color:'var(--muted2)'};letter-spacing:.04em;">${p.start}–${p.end}</div>
-          <div style="font-size:9px;color:var(--muted2);font-weight:600;">${dur} min</div>
+          <div style="font-size:10px;font-weight:800;color:${done?'var(--muted2)':active?p.color:'var(--muted2)'};letter-spacing:.04em;">${dur} min</div>
         </div>
         <div style="flex:1;min-width:0;">
           <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;">
@@ -584,7 +604,7 @@ Gasto do dia = base + treino que voce marcou."><svg viewBox="0 0 24 24" fill="no
               ${active?`<span style="font-size:9px;font-weight:900;letter-spacing:.08em;color:#fff;background:${p.color};padding:2px 7px;border-radius:6px;">AGORA</span>`:''}
               ${done?`<span style="font-size:9px;font-weight:900;color:var(--muted2);">✓</span>`:''}
             </div>
-            ${active?`<span style="font-family:'Anton';font-size:28px;color:${p.color};line-height:1;" id="phaseCountdown">${tmFmtTime(secLeft)}</span>`:''}
+            ${active?`<span style="font-family:'Anton';font-size:28px;color:${p.color};line-height:1;">${tmFmtTime(secLeft)}</span>`:''}
           </div>
           <div style="display:flex;gap:12px;margin-top:4px;">
             <span style="font-size:12px;font-weight:700;color:var(--muted);">📐 Inc: <b style="color:${active?p.color:'var(--ink)'}">${p.inc}</b></span>
@@ -594,13 +614,41 @@ Gasto do dia = base + treino que voce marcou."><svg viewBox="0 0 24 24" fill="no
         </div>
       </div>`;
 
-      // barra de progresso da etapa (só quando ativa)
-      const bar=active?`<div style="height:4px;background:${p.color}33;">
-        <div style="height:100%;width:${phasePct}%;background:${p.color};transition:width .9s linear;"></div>
+      const bar=(active||done)?`<div style="height:4px;background:${p.color}22;">
+        <div style="height:100%;width:${phasePct}%;background:${p.color};transition:width .9s linear;border-radius:0 2px 2px 0;"></div>
       </div>`:'';
 
       div.innerHTML=row+bar;
       c.appendChild(div);
+
+      // bloco de pausa APÓS esta etapa (se estiver em pausa ou se a próxima etapa ainda não começou e o treino está rodando)
+      if(i<TM_PHASES.length-1){
+        const showPause=inPauseAfter;
+        const pausePct=inPauseAfter?Math.min(100,((TM_PAUSE-state.pauseLeft)/TM_PAUSE)*100):0;
+        const pauseDiv=document.createElement('div');
+        pauseDiv.style.cssText=`border-radius:10px;margin-bottom:6px;margin-top:4px;border:1px solid ${showPause?'#e0c060':'var(--card-edge)'};background:${showPause?'#fffde8':'transparent'};transition:.3s;overflow:hidden;padding:0;`;
+        if(showPause) pauseDiv.style.boxShadow='0 2px 12px rgba(200,180,0,.15)';
+
+        if(showPause){
+          const next=TM_PHASES[i+1];
+          pauseDiv.innerHTML=`
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 12px;gap:8px;">
+              <div>
+                <div style="font-size:11px;font-weight:900;color:#a08000;letter-spacing:.08em;">⏳ PREPARE-SE</div>
+                <div style="font-size:12px;font-weight:700;color:#6b5800;margin-top:2px;">Próxima: <b>${next.name}</b> · Inc ${next.inc} · ${next.vel.toFixed(1)} km/h</div>
+              </div>
+              <span style="font-family:'Anton';font-size:34px;color:#c8a000;line-height:1;">${state.pauseLeft}</span>
+            </div>
+            <div style="height:4px;background:#e8d800;opacity:.2;">
+              <div style="height:100%;width:${pausePct}%;background:#c8a000;transition:width .9s linear;"></div>
+            </div>`;
+        } else {
+          // pequeno separador quando não está em pausa
+          pauseDiv.style.cssText='margin-bottom:6px;margin-top:4px;height:6px;display:flex;align-items:center;';
+          pauseDiv.innerHTML='<div style="flex:1;height:1px;border-top:1px dashed var(--card-edge);margin:0 8px;"></div>';
+        }
+        c.appendChild(pauseDiv);
+      }
     });
   }
 
@@ -608,7 +656,7 @@ Gasto do dia = base + treino que voce marcou."><svg viewBox="0 0 24 24" fill="no
 
   function tmToggle(){
     const btn=document.getElementById('tmBtn');
-    if(!tmRunning&&tmElapsed>=TM_TOTAL){ tmElapsed=0; tmBaseElapsed=0; }
+    if(!tmRunning&&tmStateAt(tmElapsed).type==='done'){ tmElapsed=0; tmBaseElapsed=0; }
     if(tmRunning){
       // pausar: salva quanto tempo passou até agora
       clearInterval(tmInterval); tmRunning=false;
@@ -626,7 +674,7 @@ Gasto do dia = base + treino que voce marcou."><svg viewBox="0 0 24 24" fill="no
         // calcula o tempo real decorrido desde o start (ignora pauses do browser)
         tmElapsed=tmBaseElapsed+Math.floor((Date.now()-tmStartWallClock)/1000);
         tmRender();
-        if(tmElapsed>=TM_TOTAL){
+        if(tmStateAt(tmElapsed).type==='done'){
           clearInterval(tmInterval); tmRunning=false;
           tmReleaseWakeLock();
           btn.textContent='✓ Concluído!'; btn.style.background='var(--olive-deep)'; btn.style.color='#fff';
