@@ -261,7 +261,7 @@ Gasto do dia = base + treino que voce marcou."><svg viewBox="0 0 24 24" fill="no
         <div class="card" id="treadmill-card">
     <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:16px;">
       <div>
-        <div style="font-size:13px;font-weight:800;color:var(--muted);letter-spacing:.04em;">🎯 30 MIN · ~380 KCAL</div>
+        <div style="font-size:13px;font-weight:800;color:var(--muted);letter-spacing:.04em;">🎯 30 MIN · ~380 KCAL <span id="tmWakeLockInd" style="display:none;font-size:11px;background:var(--olive-light);color:var(--olive-deep);border:1px solid var(--olive);border-radius:6px;padding:2px 7px;font-weight:700;">📱 tela ativa</span></div>
         <div style="font-size:12px;color:var(--muted2);font-weight:600;margin-top:2px;">Inclinação forte + ritmo acelerado · baixo impacto</div>
       </div>
       <button id="tmBtn" onclick="tmToggle()" style="font-family:'Manrope';font-size:13px;font-weight:800;padding:10px 18px;border-radius:12px;border:none;background:var(--green);color:var(--bg);cursor:pointer;transition:.2s;">▶ Iniciar</button>
@@ -531,6 +531,26 @@ Gasto do dia = base + treino que voce marcou."><svg viewBox="0 0 24 24" fill="no
   ];
   const TM_TOTAL=30*60;
   let tmInterval=null, tmElapsed=0, tmRunning=false;
+  let tmStartWallClock=null, tmBaseElapsed=0;
+  let wakeLock=null;
+
+  async function tmRequestWakeLock(){
+    if(!('wakeLock' in navigator)) return;
+    try{
+      wakeLock=await navigator.wakeLock.request('screen');
+      const ind=document.getElementById('tmWakeLockInd');
+      if(ind) ind.style.display='inline';
+    }catch(e){}
+  }
+  function tmReleaseWakeLock(){
+    if(wakeLock){ wakeLock.release().catch(()=>{}); wakeLock=null; }
+    const ind=document.getElementById('tmWakeLockInd');
+    if(ind) ind.style.display='none';
+  }
+  // Re-adquire wake lock se o usuário voltar para a aba/app
+  document.addEventListener('visibilitychange',async()=>{
+    if(document.visibilityState==='visible'&&tmRunning){ await tmRequestWakeLock(); }
+  });
 
   function tmPhaseAt(sec){ const min=sec/60; return TM_PHASES.findIndex(p=>min>=p.start&&min<p.end); }
   function tmFmtTime(sec){ const m=Math.floor(sec/60),s=sec%60; return String(m).padStart(2,'0')+':'+String(s).padStart(2,'0'); }
@@ -588,21 +608,30 @@ Gasto do dia = base + treino que voce marcou."><svg viewBox="0 0 24 24" fill="no
 
   function tmToggle(){
     const btn=document.getElementById('tmBtn');
-    if(!tmRunning&&tmElapsed>=TM_TOTAL){ tmElapsed=0; }
+    if(!tmRunning&&tmElapsed>=TM_TOTAL){ tmElapsed=0; tmBaseElapsed=0; }
     if(tmRunning){
+      // pausar: salva quanto tempo passou até agora
       clearInterval(tmInterval); tmRunning=false;
+      tmBaseElapsed=tmElapsed;
+      tmStartWallClock=null;
+      tmReleaseWakeLock();
       btn.textContent='▶ Continuar'; btn.style.background='var(--green)'; btn.style.color='var(--bg)';
     } else {
+      // iniciar / continuar: ancora no relógio real
+      tmStartWallClock=Date.now();
       tmRunning=true;
+      tmRequestWakeLock();
       btn.textContent='⏸ Pausar'; btn.style.background='var(--coral)';
       tmInterval=setInterval(()=>{
-        tmElapsed++;
+        // calcula o tempo real decorrido desde o start (ignora pauses do browser)
+        tmElapsed=tmBaseElapsed+Math.floor((Date.now()-tmStartWallClock)/1000);
         tmRender();
         if(tmElapsed>=TM_TOTAL){
           clearInterval(tmInterval); tmRunning=false;
+          tmReleaseWakeLock();
           btn.textContent='✓ Concluído!'; btn.style.background='var(--olive-deep)'; btn.style.color='#fff';
         }
-      },1000);
+      },500); // tick a cada 0.5s para compensar imprecisão do interval
     }
     tmRender();
   }
