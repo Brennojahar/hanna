@@ -18,7 +18,7 @@
     --ink:#282828;--muted:#888888;--muted2:#BBBBBB;
     --lime:var(--olive);--green:var(--olive);--green-deep:var(--olive-deep);
     --coral:var(--hazel-deep);--coral-soft:var(--hazel);
-    /* curvas de easing (Emil Kowalski) — as nativas do CSS são fracas */
+    /* curvas de easing (Emil Kowalski): as nativas do CSS são fracas */
     --ease-out:cubic-bezier(0.23,1,0.32,1);
     --ease-in-out:cubic-bezier(0.77,0,0.175,1);
     --ease-drawer:cubic-bezier(0.32,0.72,0,1);
@@ -368,7 +368,7 @@
   .ex-card{animation:cardIn .4s var(--ease-out) backwards;}
   .ex-card:nth-child(1){animation-delay:.02s}.ex-card:nth-child(2){animation-delay:.06s}.ex-card:nth-child(3){animation-delay:.10s}.ex-card:nth-child(4){animation-delay:.14s}.ex-card:nth-child(5){animation-delay:.18s}.ex-card:nth-child(6){animation-delay:.22s}.ex-card:nth-child(7){animation-delay:.26s}
 
-  /* respeita usuários sensíveis a movimento — mantém fade, remove deslocamento */
+  /* respeita usuários sensíveis a movimento: mantém fade, remove deslocamento */
   @media (prefers-reduced-motion: reduce){
     *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;}
     .reveal{transform:none!important;transition:opacity .3s ease!important;}
@@ -423,7 +423,7 @@ Gasto do dia = base + treino que voce marcou."><svg viewBox="0 0 24 24" fill="no
             <div class="refchip">Base s/ treino <b>2.300</b></div>
             <div class="refchip">Semana cheia <b>~3.000</b></div>
           </div>
-          <div class="agenda-h">Sua semana — toque pra marcar o que treinou</div>
+          <div class="agenda-h">Sua semana. Toque pra marcar o que treinou</div>
           <div id="agenda"></div>
           <div class="wsum">
             <div class="wb"><div class="wv" id="wkDone">0</div><div class="wl">treinos feitos</div></div>
@@ -459,7 +459,7 @@ Gasto do dia = base + treino que voce marcou."><svg viewBox="0 0 24 24" fill="no
         ✅ Sem se pendurar no apoio (anula metade do esforço)<br>
         ✅ Abdômen contraído e postura ereta<br>
         ✅ Passadas firmes, pisando o pé inteiro<br>
-        ✅ Se inclinação 12–13 for demais, comece em 10 e suba com o tempo
+        ✅ Se inclinação 12-13 for demais, comece em 10 e suba com o tempo
       </div>
     </div>
         </div>
@@ -831,7 +831,7 @@ Gasto do dia = base + treino que voce marcou."><svg viewBox="0 0 24 24" fill="no
     {name:'Subida progressiva',dur:5*60, inc:8,  vel:5.0, tip:'Já entra na zona de queima, respiração acelera mas controlada.',              color:'#8a9e44', bg:'#eef4d8'},
     {name:'Power walk forte',  dur:4*60, inc:6,  vel:6.0, tip:'Ritmo rápido em terreno mais baixo. Aqui o coração trabalha de verdade.',     color:'#CBD77E', bg:'#f8fced'},
     {name:'Montanha',          dur:5*60, inc:12, vel:4.5, tip:'Bloco mais pesado: pernas, glúteos e abdômen no limite, sem impacto.',        color:'#c4995a', bg:'#faf3e8'},
-    {name:'Recuperação ativa', dur:4*60, inc:7,  vel:5.2, tip:'Baixa a inclinação mas mantém o ritmo — gasto calórico segue alto.',         color:'#a8b85e', bg:'#f4f8e6'},
+    {name:'Recuperação ativa', dur:4*60, inc:7,  vel:5.2, tip:'Baixa a inclinação mas mantém o ritmo, o gasto calórico segue alto.',         color:'#a8b85e', bg:'#f4f8e6'},
     {name:'Pico final',        dur:5*60, inc:13, vel:4.7, tip:'Último esforço forte. É onde mais se queima.',                               color:'#b07030', bg:'#fdf0e0'},
     {name:'Desaceleração',     dur:3*60, inc:4,  vel:4.0, tip:'Reduz aos poucos para a frequência voltar ao normal.',                       color:'#888888', bg:'#f5f5f5'},
   ];
@@ -1110,7 +1110,7 @@ Gasto do dia = base + treino que voce marcou."><svg viewBox="0 0 24 24" fill="no
   const EX_PHOTOS={};   // foto do exercício: EX_PHOTOS['sup_maquina']='...'
 
   const TRAININGS=[
-    { id:'superiores06', name:'SUPERIORES COMPLETO 06', dur:'45–55 min', equip:'Barra, Banco, Halteres, Rack',
+    { id:'superiores06', name:'SUPERIORES COMPLETO 06', dur:'45-55 min', equip:'Barra, Banco, Halteres, Rack',
       ex:[
         {id:'sup_maquina',  name:'Supino Máquina', sets:3, kg:23,   reps:15, obs:'Se preferir, trocar pelo supino reto com a barra ou halteres'},
         {id:'sup_incl_h',   name:'Supino Inclinado com Halteres', sets:3, kg:18, reps:12, perSide:true},
@@ -1120,7 +1120,7 @@ Gasto do dia = base + treino que voce marcou."><svg viewBox="0 0 24 24" fill="no
         {id:'tri_polia',    name:'Tríceps na Polia', sets:4, kg:16, reps:12},
         {id:'rosca_cabo',   name:'Rosca Direta no Cabo', sets:4, kg:18, reps:12},
       ]},
-    { id:'inferiores06', name:'INFERIORES COMPLETO E ABD 06', dur:'35–45 min', equip:'Barra, Rack',
+    { id:'inferiores06', name:'INFERIORES COMPLETO E ABD 06', dur:'35-45 min', equip:'Barra, Rack',
       ex:[
         {id:'agach_smith',  name:'Agachamento Smith', sets:3, kg:9, reps:15},
         {id:'leg_press',    name:'Leg Press 45°', sets:3, kg:45, reps:12},
@@ -1131,7 +1131,7 @@ Gasto do dia = base + treino que voce marcou."><svg viewBox="0 0 24 24" fill="no
         {id:'panturrilha',  name:'Panturrilha Máquina', sets:2, kg:14, reps:20},
         {id:'abd_reto',     name:'Abdominal Reto Curto', sets:2, isTime:true, time:30},
       ]},
-    { id:'peitotri06', name:'PEITO / TRÍCEPS 06', dur:'35–45 min', equip:'Barra, Banco, Halteres',
+    { id:'peitotri06', name:'PEITO / TRÍCEPS 06', dur:'35-45 min', equip:'Barra, Banco, Halteres',
       ex:[
         {id:'pt_sup_maq',   name:'Supino Máquina', sets:4, kg:80, reps:12},
         {id:'pt_sup_incl',  name:'Supino Inclinado com Halteres', sets:3, kg:20, reps:12, perSide:true},
@@ -1323,7 +1323,7 @@ Gasto do dia = base + treino que voce marcou."><svg viewBox="0 0 24 24" fill="no
   function loadSessions(){ try{ const s=localStorage.getItem(SESS_KEY); if(s) sessions=JSON.parse(s); }catch(e){ sessions=[]; } }
   function saveSessions(){ try{ localStorage.setItem(SESS_KEY,JSON.stringify(sessions)); }catch(e){} }
 
-  function durMid(dur){ // "45–55 min" -> 50 ; "60 min" -> 60
+  function durMid(dur){ // "45-55 min" -> 50 ; "60 min" -> 60
     const nums=(dur.match(/\d+/g)||[]).map(Number);
     if(!nums.length)return 40;
     return Math.round(nums.reduce((a,b)=>a+b,0)/nums.length);
