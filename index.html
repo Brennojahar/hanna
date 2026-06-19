@@ -6,7 +6,17 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<title>Resumo Nutricional · Hanna</title>
+<title>Hanna · Treino</title>
+<!-- PWA / app nativo -->
+<meta name="theme-color" content="#F7F7F7">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Hanna">
+<meta name="application-name" content="Hanna">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -24,8 +34,15 @@
     --ease-drawer:cubic-bezier(0.32,0.72,0,1);
   }
   *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
-  html,body{background:var(--bg);}
-  body{font-family:'Manrope',system-ui,sans-serif;color:var(--ink);line-height:1.5;-webkit-user-select:text;user-select:text;overflow-x:hidden;padding-bottom:48px;}
+  html{-webkit-text-size-adjust:100%;text-size-adjust:100%;}
+  html,body{background:var(--bg);overscroll-behavior-y:none;}
+  body{font-family:'Manrope',system-ui,sans-serif;color:var(--ink);line-height:1.5;overflow-x:hidden;padding-bottom:48px;
+    /* feel de app: sem seleção/realce acidental, toque sem delay de 300ms */
+    -webkit-user-select:none;user-select:none;touch-action:manipulation;}
+  /* mantém texto selecionável só onde faz sentido (conteúdo copiável) */
+  .meal,.refchip,.ins,.disc,.ex-info,.wh-row,.done-info{-webkit-user-select:text;user-select:text;}
+  /* números sem "pulo" de largura (timers, contadores, métricas) */
+  .today-big,.wc-big,.pg-stat .v,.stat .num,.set-inp,#tmPhases,.wh-val,.cal-day{font-variant-numeric:tabular-nums;font-feature-settings:"tnum";}
   body::before{content:"";position:fixed;inset:0;z-index:-2;
     background:
       radial-gradient(60% 40% at 80% -5%, rgba(203,215,126,.18), transparent 60%),
@@ -36,7 +53,7 @@
   .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1);}
   .reveal.in{opacity:1;transform:none;}
 
-  .hero-sticky{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(247,247,247,.93);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid transparent;padding:22px 18px 16px;display:flex;flex-direction:column;align-items:flex-start;will-change:padding;}
+  .hero-sticky{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(247,247,247,.93);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid transparent;padding:calc(env(safe-area-inset-top) + var(--hero-pt,22px)) 18px var(--hero-pb,16px);display:flex;flex-direction:column;align-items:flex-start;will-change:padding;}
   .hero-sticky h1{font-family:'Anton',sans-serif;font-weight:400;font-size:58px;line-height:.95;letter-spacing:.01em;text-transform:uppercase;background:linear-gradient(120deg,#282828 10%,var(--olive-deep) 60%,#8fa040 100%);-webkit-background-clip:text;background-clip:text;color:transparent;will-change:font-size;}
   .hero-sticky .sub{color:var(--muted);font-weight:600;font-size:15px;margin-top:4px;will-change:font-size,opacity;}
   .hero-spacer{height:110px;}
@@ -108,7 +125,7 @@
   .day.today{background:linear-gradient(90deg,var(--olive-light),transparent);border-radius:14px;margin:4px -8px;padding:11px 8px;border-bottom:none;}
   .day.today .dkcal{color:var(--olive-deep);}
   .badge-today{font-size:9px;font-weight:900;letter-spacing:.08em;color:#fff;background:var(--olive-deep);padding:2px 7px;border-radius:6px;}
-  .toggle{width:34px;height:34px;flex:none;border-radius:50%;border:2px solid var(--card-edge);background:transparent;cursor:pointer;display:grid;place-items:center;color:transparent;font-size:15px;font-weight:900;transition:transform .15s ease,background .2s,border-color .2s,box-shadow .2s;}
+  .toggle{width:40px;height:40px;flex:none;border-radius:50%;border:2px solid var(--card-edge);background:transparent;cursor:pointer;display:grid;place-items:center;color:transparent;font-size:16px;font-weight:900;transition:transform .15s var(--ease-out),background .2s,border-color .2s,box-shadow .2s;}
   .toggle:active{transform:scale(.88);}
   .toggle.on{background:var(--olive);border-color:var(--olive-deep);color:#282828;box-shadow:0 2px 12px rgba(168,184,94,.4);}
   .wsum{display:flex;gap:10px;margin-top:16px;padding-top:14px;border-top:1px dashed var(--card-edge);}
@@ -290,11 +307,6 @@
   .view-enter{animation:viewIn .24s var(--ease-out);}
   @keyframes viewIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
 
-  /* chat placeholder / progresso */
-  .placeholder-view{padding:50px 20px;text-align:center;}
-  .placeholder-view .pv-ic{font-size:54px;}
-  .placeholder-view h3{font-family:'Anton',sans-serif;font-weight:400;font-size:28px;text-transform:uppercase;color:var(--ink);margin-top:14px;letter-spacing:.01em;}
-  .placeholder-view p{color:var(--muted);font-size:14px;font-weight:600;margin-top:8px;line-height:1.5;}
   .view-pad{padding-top:8px;}
 
   /* ── PROGRESSO ── */
@@ -533,15 +545,6 @@ Gasto do dia = base + treino que voce marcou."><svg viewBox="0 0 24 24" fill="no
     <div class="done-list" id="doneList"></div>
   </div>
 
-  <!-- ===== VIEW: CHAT ===== -->
-  <div id="view-chat" class="view" hidden>
-    <div class="placeholder-view">
-      <div class="pv-ic">💬</div>
-      <h3>Chat</h3>
-      <p>Em breve você vai poder conversar por aqui.</p>
-    </div>
-  </div>
-
 </div>
 
 <!-- ===== BOTTOM NAV ===== -->
@@ -553,10 +556,6 @@ Gasto do dia = base + treino que voce marcou."><svg viewBox="0 0 24 24" fill="no
   <button class="botnav-item" id="nav-treino" onclick="switchView('treino')">
     <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 6.5l11 11"/><path d="M21 21l-1-1"/><path d="M3 3l1 1"/><rect x="1.5" y="8.5" width="4" height="7" rx="1" transform="rotate(-45 3.5 12)"/><rect x="18.5" y="8.5" width="4" height="7" rx="1" transform="rotate(-45 20.5 12)"/></svg>
     <span class="bn-lab">Treino</span>
-  </button>
-  <button class="botnav-item" id="nav-chat" onclick="switchView('chat')">
-    <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.38 8.38 0 0 1 8.5-8.5 8.38 8.38 0 0 1 8.5 8.5z"/></svg>
-    <span class="bn-lab">Chat</span>
   </button>
   <button class="botnav-item" id="nav-progresso" onclick="switchView('progresso')">
     <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M21 7v5h-5"/></svg>
@@ -723,7 +722,7 @@ Gasto do dia = base + treino que voce marcou."><svg viewBox="0 0 24 24" fill="no
   function goProgresso(){ switchView('progresso'); }
 
   /* ── NAVEGAÇÃO POR ABAS ── */
-  const VIEWS=['inicio','treino','progresso','chat'];
+  const VIEWS=['inicio','treino','progresso'];
   function switchView(name){
     VIEWS.forEach(v=>{
       const el=document.getElementById('view-'+v);
@@ -1093,8 +1092,9 @@ Gasto do dia = base + treino que voce marcou."><svg viewBox="0 0 24 24" fill="no
       h1.style.fontSize       = lerp(H1_BIG,  H1_SM,  t)+'px';
       sub.style.fontSize      = lerp(SUB_BIG, SUB_SM, t)+'px';
       sub.style.opacity       = lerp(1, .7, t);
-      sticky.style.paddingTop    = lerp(PAD_TOP_BIG, PAD_TOP_SM, t)+'px';
-      sticky.style.paddingBottom = lerp(PAD_BOT_BIG, PAD_BOT_SM, t)+'px';
+      // usa CSS vars para somar com env(safe-area-inset-top) sem sobrescrever
+      sticky.style.setProperty('--hero-pt', lerp(PAD_TOP_BIG, PAD_TOP_SM, t)+'px');
+      sticky.style.setProperty('--hero-pb', lerp(PAD_BOT_BIG, PAD_BOT_SM, t)+'px');
       sticky.style.borderBottomColor = t>0.4?'var(--card-edge)':'transparent';
       // ajusta o spacer para não sobrepor o conteúdo
       spacer.style.height = sticky.offsetHeight+'px';

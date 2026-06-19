@@ -1,0 +1,14 @@
+{
+  "name": "Hanna · Treino",
+  "short_name": "Hanna",
+  "description": "Treino semanal e acompanhamento de peso da Hanna",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#F7F7F7",
+  "theme_color": "#F7F7F7",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
