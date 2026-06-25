@@ -6,14 +6,14 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<title>Hanna · Treino</title>
+<title>Meu Treino</title>
 <!-- PWA / app nativo -->
 <meta name="theme-color" content="#dde7b7">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="Hanna">
-<meta name="application-name" content="Hanna">
+<meta name="apple-mobile-web-app-title" content="Treino">
+<meta name="application-name" content="Treino">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="icon.svg">
@@ -62,7 +62,8 @@
   .reveal.in{opacity:1;transform:none;}
 
   .hero-sticky{position:fixed;top:0;left:0;right:0;z-index:50;background:var(--glass-strong);backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);border-bottom:1px solid transparent;padding:calc(env(safe-area-inset-top) + var(--hero-pt,22px)) 18px var(--hero-pb,16px);display:flex;flex-direction:column;align-items:flex-start;will-change:padding;}
-  .hero-sticky h1{font-family:'Anton',sans-serif;font-weight:400;font-size:58px;line-height:.95;letter-spacing:.01em;text-transform:uppercase;background:linear-gradient(120deg,#282828 10%,var(--olive-deep) 60%,#8fa040 100%);-webkit-background-clip:text;background-clip:text;color:transparent;will-change:font-size;}
+  .hero-sticky h1{font-family:'Anton',sans-serif;font-weight:400;font-size:58px;line-height:.95;letter-spacing:.01em;text-transform:uppercase;background:linear-gradient(120deg,#282828 10%,var(--olive-deep) 60%,#8fa040 100%);-webkit-background-clip:text;background-clip:text;color:transparent;will-change:font-size;cursor:pointer;transition:opacity .15s ease;}
+  .hero-sticky h1:active{opacity:.6;}
   .hero-sticky .sub{color:var(--muted);font-weight:600;font-size:15px;margin-top:4px;will-change:font-size,opacity;}
   .hero-spacer{height:110px;}
   .hero{padding:18px 0 14px;position:relative;}
@@ -408,7 +409,7 @@
 
   <!-- Header fixo -->
   <div class="hero-sticky">
-    <h1>Hanna</h1>
+    <h1 id="heroName" onclick="openProfileEdit('name')" title="Toque para editar o nome">NOME</h1>
     <div class="sub">Treino semanal para ganho do corpinho 💪</div>
   </div>
   <div class="hero-spacer"></div>
@@ -619,7 +620,7 @@ Gasto do dia = base + treino que voce marcou."><svg viewBox="0 0 24 24" fill="no
 <script>
   /* ── PROFILE ── */
   const PROFILE_KEY='hanna-profile-v1';
-  let profile={age:null,height:null,weight:null,gender:null};
+  let profile={name:null,age:null,height:null,weight:null,gender:null};
 
   function loadProfile(){
     try{ const s=localStorage.getItem(PROFILE_KEY); if(s) profile=Object.assign(profile,JSON.parse(s)); }catch(e){}
@@ -627,6 +628,7 @@ Gasto do dia = base + treino que voce marcou."><svg viewBox="0 0 24 24" fill="no
   }
   function saveProfile(){ try{ localStorage.setItem(PROFILE_KEY,JSON.stringify(profile)); }catch(e){} }
   function renderProfileChips(){
+    const hn=document.getElementById('heroName'); if(hn) hn.textContent=profile.name||'NOME';
     document.getElementById('chipAge').textContent=profile.age??'–';
     document.getElementById('chipHeight').textContent=profile.height??'–';
     document.getElementById('chipWeight').textContent=profile.weight??'–';
@@ -637,7 +639,7 @@ Gasto do dia = base + treino que voce marcou."><svg viewBox="0 0 24 24" fill="no
   let _editField=null;
   function openProfileEdit(field){
     _editField=field;
-    const titles={age:'Editar Idade',height:'Editar Altura',gender:'Editar Gênero'};
+    const titles={name:'Editar nome',age:'Editar Idade',height:'Editar Altura',gender:'Editar Gênero'};
     document.getElementById('profileModalTitle').textContent=titles[field];
     const body=document.getElementById('profileModalBody');
     if(field==='gender'){
@@ -646,11 +648,15 @@ Gasto do dia = base + treino que voce marcou."><svg viewBox="0 0 24 24" fill="no
         <button class="gender-opt${sel==='Homem'?' sel':''}" id="gOptH" onclick="selectGender('Homem')">🚹 Homem</button>
         <button class="gender-opt${sel==='Mulher'?' sel':''}" id="gOptM" onclick="selectGender('Mulher')">🚺 Mulher</button>
       </div>`;
+    } else if(field==='name'){
+      body.innerHTML=`<div class="modal-label">Seu nome</div>
+        <input class="modal-input" id="profileInput" type="text" maxlength="14" autocapitalize="characters" placeholder="Ex: HANNA" value="${profile.name??''}">`;
+      setTimeout(()=>{ const inp=document.getElementById('profileInput'); if(inp){inp.focus();inp.select();} },300);
     } else {
       const labels={age:'Idade (anos)',height:'Altura (cm)'};
       const types={age:'number',height:'number'};
       body.innerHTML=`<div class="modal-label">${labels[field]}</div>
-        <input class="modal-input" id="profileInput" type="${types[field]}" value="${profile[field]}" min="1" max="250">`;
+        <input class="modal-input" id="profileInput" type="${types[field]}" value="${profile[field]??''}" min="1" max="250">`;
       setTimeout(()=>{ const inp=document.getElementById('profileInput'); if(inp){inp.focus();inp.select();} },300);
     }
     openModal('profileModal');
@@ -667,6 +673,11 @@ Gasto do dia = base + treino que voce marcou."><svg viewBox="0 0 24 24" fill="no
       saveProfile(); renderProfileChips(); closeModal('profileModal'); return;
     }
     const inp=document.getElementById('profileInput');
+    if(_editField==='name'){
+      const nm=inp.value.trim();
+      profile.name = nm ? nm.slice(0,14) : null;
+      saveProfile(); renderProfileChips(); closeModal('profileModal'); return;
+    }
     const v=parseFloat(inp.value);
     if(!isNaN(v)&&v>0){ profile[_editField]=Math.round(v*10)/10; saveProfile(); renderProfileChips(); }
     closeModal('profileModal');

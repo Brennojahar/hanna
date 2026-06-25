@@ -1,7 +1,7 @@
 {
-  "name": "Hanna · Treino",
-  "short_name": "Hanna",
-  "description": "Treino semanal e acompanhamento de peso da Hanna",
+  "name": "Meu Treino",
+  "short_name": "Treino",
+  "description": "Treino semanal e acompanhamento de peso",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
